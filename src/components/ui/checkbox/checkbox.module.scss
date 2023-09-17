@@ -1,0 +1,54 @@
+button {
+  all: unset;
+}
+
+.container {
+  display: flex;
+
+  .label {
+    display: flex;
+    align-items: center;
+
+    .labelText {
+      font-size: var(--font-size-s);
+      line-height: var(--line-height-m);
+      font-weight:  var(--font-weight-regular);
+      margin: 0 8px;
+    }
+  }
+
+  .root {
+    width: 24px;
+    height: 24px;
+
+    .icon {
+      all: inherit;
+
+      .check {
+        fill: var(--color-dark-900);
+      }
+    }
+
+    &:disabled {
+      .icon {
+        color: var(--color-dark-100);
+
+        .check {
+          fill: var(--color-light-100);
+        }
+      }
+    }
+
+    &:focus-visible {
+      background: var(--color-dark-100);
+      border-radius: 100%;
+      outline: 5px solid var(--color-dark-100);
+    }
+
+    &:hover {
+      background: var(--color-dark-500);
+      border-radius: 100%;
+      outline: 5px solid var(--color-dark-500);
+    }
+  }
+}

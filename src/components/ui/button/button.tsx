@@ -1,5 +1,7 @@
 import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
+
 import { clsx } from 'clsx'
+
 import logout from './../../../assets/icons/logout.svg'
 import s from './button.module.scss'
 
@@ -25,13 +27,11 @@ export const Button = <T extends ElementType = 'button'>(
     ...rest
   } = props
 
-    const classNames = clsx(s[variant], fullWidth && s.fullWidth, disabled && s.disabled, className)
+  const classNames = clsx(s[variant], fullWidth && s.fullWidth, disabled && s.disabled, className)
 
   return (
     <>
-      <Component
-        className={classNames} {...rest}
-      >
+      <Component className={classNames} {...rest}>
         {(variant === 'primaryWithIcon' || variant === 'secondaryWithIcon') && (
           <img src={logout} alt="Logout" className={s.icons} />
         )}{' '}

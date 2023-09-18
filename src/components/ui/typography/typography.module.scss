@@ -1,0 +1,61 @@
+@mixin t-params($fs, $fw, $lh) {
+  margin: 0;
+
+  font-size: $fs;
+  font-weight: $fw;
+  font-style: normal;
+  line-height: $lh;
+  color: var(--color-light-100);
+}
+
+.large {
+  @include t-params(var(--font-size-xxl), var(--font-weight-bold), var(--line-height-l));
+}
+
+.h1 {
+  @include t-params(var(--font-size-xl), var(--font-weight-bold), var(--line-height-l));
+}
+
+.h2 {
+  @include t-params(var(--font-size-l), var(--font-weight-bold), var(--line-height-m));
+}
+
+.h3 {
+  @include t-params(var(--font-size-m), var(--font-weight-bold), var(--line-height-m));
+}
+
+.body1 {
+  @include t-params(var(--font-size-m), var(--font-weight-regular), var(--line-height-m));
+}
+
+.body2 {
+  @include t-params(var(--font-size-s), var(--font-weight-regular), var(--line-height-m));
+}
+
+.subtitle1 {
+  @include t-params(var(--font-size-m), var(--font-weight-bold), var(--line-height-m));
+}
+
+.subtitle2 {
+  @include t-params(var(--font-size-s), var(--font-weight-bold), var(--line-height-m));
+}
+
+.caption {
+  @include t-params(var(--font-size-xs), var(--font-weight-regular), var(--line-height-s));
+}
+
+.overline {
+  @include t-params(var(--font-size-xs), var(--font-weight-bold), var(--line-height-s));
+}
+
+.link1 {
+  @include t-params(var(--font-size-s), var(--font-weight-regular), var(--line-height-m));
+
+  text-decoration-line: underline;
+}
+
+.link2 {
+  @include t-params(var(--font-size-xs), var(--font-weight-regular), var(--line-height-s));
+
+  text-decoration-line: underline;
+}

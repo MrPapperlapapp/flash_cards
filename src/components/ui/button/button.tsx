@@ -2,8 +2,9 @@ import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 
 import { clsx } from 'clsx'
 
-import logout from './../../../assets/icons/logout.svg'
 import s from './button.module.scss'
+
+import { Logout } from '@/assets/icons/logout.tsx'
 
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
@@ -33,7 +34,7 @@ export const Button = <T extends ElementType = 'button'>(
     <>
       <Component className={classNames} {...rest}>
         {(variant === 'primaryWithIcon' || variant === 'secondaryWithIcon') && (
-          <img src={logout} alt="Logout" className={s.icons} />
+          <Logout className={s.icons} />
         )}{' '}
         {children}
       </Component>

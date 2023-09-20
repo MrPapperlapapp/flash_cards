@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { TextField } from '@/components/ui'
+import { TextField } from './'
 
 const meta = {
   title: 'Components/Text Field',
@@ -47,7 +47,7 @@ export const Password = {
         placeholder="Placeholder"
         label="Password text field"
         value={state}
-        onValueChange={e => setState(e)}
+        onValueChange={(e: string) => setState(e)}
       />
     )
   },

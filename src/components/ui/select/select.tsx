@@ -7,7 +7,7 @@ import { clsx } from 'clsx'
 
 import s from './select.module.scss'
 
-import {Scrollbar, Typography} from "@/components/ui";
+import { Scrollbar, Typography } from '@/components/ui'
 
 export default {}
 type Option =

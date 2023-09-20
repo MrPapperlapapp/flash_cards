@@ -4,7 +4,9 @@ export function App() {
   return (
     <>
       <span>Hallo</span>
-        <RadioGroup options={[{label: '1', value: '1'},{label: '2', value: '2'}]}></RadioGroup>
+        <div >
+            <RadioGroup  name={'asdasdasd'} options={[{label: 'Apple', value: '1'},{label: 'Ololo', value: '2'},{label: 'Trololo', value: '3'}]}></RadioGroup>
+        </div>
     </>
   )
 }

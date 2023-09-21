@@ -7,9 +7,9 @@ import { usePagination } from './usePagination'
 
 import ChevronLeft from '@/assets/icons/chevronLeft.tsx'
 import ChevronRight from '@/assets/icons/chevronRight.tsx'
+import { Select } from '@/components/ui'
 import { ROWS_PER_PAGE } from '@/components/ui/pagination/constants.ts'
 import { Typography } from '@/components/ui/typography'
-import {Select} from "@/components/ui";
 
 export type PaginationPropsType = {
   currentPage: number

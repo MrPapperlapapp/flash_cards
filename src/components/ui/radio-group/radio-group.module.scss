@@ -12,7 +12,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      
+
       .item {
         all: unset;
 
@@ -25,12 +25,12 @@
         border-radius: 50%;
 
         &::after {
-          content: "";
+          content: '';
 
           position: absolute;
           top: 50%;
           left: 50%;
-          transform: translate(-50%,-50%);
+          transform: translate(-50%, -50%);
 
           width: 18px;
           height: 18px;
@@ -38,7 +38,6 @@
           border: 2px solid var(--color-accent-500);
           border-radius: 50%;
         }
-
 
         .indicator {
           position: relative;
@@ -58,7 +57,7 @@
             width: 8px;
             height: 8px;
 
-            background: var(--color-accent-500);;
+            background: var(--color-accent-500);
             border-radius: 50%;
           }
         }
@@ -74,16 +73,23 @@
         &:active {
           background: var(--color-accent-900);
         }
+
+        &:disabled {
+          background: transparent;
+        }
+
+        &[data-disabled]::after {
+          border: 2px solid var(--color-accent-900);
+        }
       }
     }
   }
 }
 
+.label_text {
+  color: inherit;
 
-
-
-
-
-
-
-
+  [data-disabled] & {
+    color: var(--color-light-900);
+  }
+}

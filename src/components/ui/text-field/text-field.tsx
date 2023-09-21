@@ -4,10 +4,10 @@ import { clsx } from 'clsx'
 
 import s from './text-field.module.scss'
 
-import { Close } from '@/assets/icons/close.tsx'
-import { ClosedEye } from '@/assets/icons/closed-eye.tsx'
-import { OpenedEye } from '@/assets/icons/opened-eye.tsx'
-import { Search } from '@/assets/icons/search.tsx'
+import { Close } from '@/assets/icons/text-field/close.tsx'
+import { ClosedEye } from '@/assets/icons/text-field/closed-eye.tsx'
+import { OpenedEye } from '@/assets/icons/text-field/opened-eye.tsx'
+import { Search } from '@/assets/icons/text-field/search.tsx'
 import { Typography } from '@/components/ui/typography'
 
 export type TextFieldProps = {

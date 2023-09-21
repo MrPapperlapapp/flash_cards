@@ -1,6 +1,6 @@
 import { SVGProps, Ref, forwardRef, memo } from 'react'
 
-import s from '../../components/ui/text-field/text-field.module.scss'
+import s from '../../../components/ui/text-field/text-field.module.scss'
 const OpenedEye = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

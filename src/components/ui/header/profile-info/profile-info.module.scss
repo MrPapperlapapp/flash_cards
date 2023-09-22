@@ -1,0 +1,12 @@
+.content {
+  display: flex;
+
+  .avatar {
+    margin-right: 10px;
+  }
+
+  .email {
+    margin-right: 10px;
+    color: var(--color-dark-100);
+  }
+}

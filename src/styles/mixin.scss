@@ -12,3 +12,10 @@
   align-items: $align-items;
   justify-content: $justify-content;
 }
+
+@mixin container($width, $padding-inline: 12px) {
+  box-sizing: content-box;
+  max-width: $width;
+  padding-inline: $padding-inline;
+  margin: 0 auto;
+}

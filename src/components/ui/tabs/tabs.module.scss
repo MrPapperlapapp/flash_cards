@@ -1,66 +1,65 @@
 /* reset */
-button,
-fieldset,
-input {
+button {
   all: unset;
 }
 
-.TabsRoot {
+.tabsRoot {
   display: flex;
   flex-direction: column;
   width: 300px;
 }
 
-.TabsList {
+.tabsList {
   display: flex;
   flex-shrink: 0;
+
+  .tabsTrigger {
+    cursor: pointer;
+    user-select: none;
+
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 24px;
+
+    color: inherit;
+
+    background: transparent;
+    border: 1px solid var(--color-dark-300);
+    border-left: none;
+
+    &:first-child {
+      border-left: 1px solid var(--color-dark-300);
+    }
+
+    &:focus-visible {
+      border-color: transparent;
+      outline: 2px solid var(--color-info-700);
+    }
+
+    &:hover {
+      color: var(--color-light-900);
+      background: var(--color-dark-300);
+      border-color: var(--color-dark-300);
+    }
+
+    &[data-state='active'] {
+      color: var(--color-light-100);
+      background: var(--color-accent-500);
+    }
+
+    &[data-disabled] {
+      cursor: initial;
+      color: var(--color-dark-300);
+      background: var(--color-dark-700);
+      border: 1px solid var(--color-dark-300);
+    }
+  }
 }
 
-.TabsTrigger {
-  cursor: pointer;
-  user-select: none;
-
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-
-  margin-left: -1px;
-  padding: 6px 24px;
-
-  color: inherit;
-
-  background-color: inherit;
-  border: 1px solid var(--color-dark-300);
-  border-radius: 0 2px 2px 0;
-}
-
-.TabsTrigger:first-child {
-  margin: 0;
-}
-
-.TabsTrigger:hover {
-  background: var(--color-dark-300);
-  border-color: var(--color-dark-100);
-}
-
-.TabsTrigger[data-state='active'] {
-  background: var(--color-accent-500);
-  border-bottom: 1px solid var(--color-accent-500);
-}
-
-.TabsTrigger:disabled {
-  cursor: initial;
-  color: var(--color-dark-300);
-  background: var(--color-dark-700);
-  border: 1px solid var(--color-dark-300);
-}
-
-.TabsTrigger:focus {
-  box-shadow: 0 0 0 2px var(--color-info-900);
-}
-
-.TabsContent {
+.tabsContent {
   flex-grow: 1;
 
   padding: 20px;
@@ -69,78 +68,4 @@ input {
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
   outline: none;
-}
-
-.Text {
-  margin-top: 0;
-  margin-bottom: 20px;
-
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--mauve-11);
-}
-
-.Fieldset {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.Label {
-  display: block;
-
-  margin-bottom: 10px;
-
-  font-size: 13px;
-  line-height: 1;
-  color: var(--violet-12);
-}
-
-.Input {
-  flex: 1 0 auto;
-
-  height: 35px;
-  padding: 0 10px;
-
-  font-size: 15px;
-  line-height: 1;
-  color: var(--violet-11);
-
-  border-radius: 4px;
-  box-shadow: 0 0 0 1px var(--violet-7);
-}
-
-.Input:focus {
-  box-shadow: 0 0 0 2px var(--violet-8);
-}
-
-.Button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  height: 35px;
-  padding: 0 15px;
-
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1;
-
-  border-radius: 4px;
-}
-
-.Button.green {
-  color: var(--green-11);
-  background-color: var(--green-4);
-}
-
-.Button.green:hover {
-  background-color: var(--green-5);
-}
-
-.Button.green:focus {
-  box-shadow: 0 0 0 2px green;
 }

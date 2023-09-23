@@ -1,6 +1,6 @@
 import { SVGProps, Ref, forwardRef, memo } from 'react'
 
-const AvatarIcon = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
+const User = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={16}
@@ -19,7 +19,7 @@ const AvatarIcon = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => 
     />
   </svg>
 )
-const ForwardRef = forwardRef(AvatarIcon)
+const ForwardRef = forwardRef(User)
 const Memo = memo(ForwardRef)
 
-export { Memo as AvatarIcon }
+export { Memo as User }

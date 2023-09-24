@@ -6,7 +6,6 @@ button {
 .tabsRoot {
   display: flex;
   flex-direction: column;
-
 }
 
 .tabsList {
@@ -58,7 +57,7 @@ button {
       cursor: initial;
       color: var(--color-dark-300);
       background: var(--color-dark-700);
-      border: 1px solid var(--color-dark-300);
+      border-color: (--color-dark-300);
     }
   }
 }
@@ -73,5 +72,3 @@ button {
   border-bottom-left-radius: 6px;
   outline: none;
 }
-
-

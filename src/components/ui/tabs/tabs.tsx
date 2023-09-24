@@ -1,12 +1,11 @@
 import { ReactNode } from 'react'
-
+import { Typography } from '@/components/ui'
+import {clsx} from "clsx";
 import * as RadixTabs from '@radix-ui/react-tabs'
-
 import s from './tabs.module.scss'
 
-import { Typography } from '@/components/ui'
+export const Tabs = ({ tabs, value, defaultValue, children,label, fullWidth, onValueChange }: TabsProps) => {
 
-export const Tabs = ({ tabs, value, defaultValue, children, onValueChange }: TabsProps) => {
   return (
     <RadixTabs.Root
       className={s.tabsRoot}
@@ -14,10 +13,11 @@ export const Tabs = ({ tabs, value, defaultValue, children, onValueChange }: Tab
       defaultValue={defaultValue}
       onValueChange={onValueChange}
     >
+      {label  && <Typography as={'label'} variant={'body2'} mb={2}>{label}</Typography> }
       <RadixTabs.List className={s.tabsList} aria-label="Manage your account">
         {tabs.map(el => (
           <RadixTabs.Trigger
-            className={s.tabsTrigger}
+            className={clsx(s.tabsTrigger,fullWidth && s.fullWidth)}
             key={el.value}
             value={el.value}
             disabled={el.disabled}
@@ -48,8 +48,10 @@ export type TabsType = {
 type TabsProps = {
   tabs: TabsType[]
   value?: string
-  children: ReactNode
+  children?: ReactNode
   defaultValue?: string
+  label?: string
+  fullWidth?: boolean
   onValueChange?: () => void
 }
 

@@ -15,7 +15,7 @@ type Option = {
 type RadioGroupType = {
   options: Option[]
   name?: string
-  value: string
+  value?: string
   required?: boolean
   disabled?: boolean
   defaultValue?: string

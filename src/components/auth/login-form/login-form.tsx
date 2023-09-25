@@ -1,3 +1,4 @@
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -11,7 +12,7 @@ const loginSchema = z.object({
   rememberMe: z.boolean().default(false),
 })
 
-type FormValues = z.infer<typeof loginSchema>
+type LoginFormSchema = z.infer<typeof loginSchema>
 
 export const LoginForm = () => {
   const {
@@ -19,15 +20,18 @@ export const LoginForm = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<LoginFormSchema>({
     resolver: zodResolver(loginSchema),
   })
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: LoginFormSchema) => {
     console.log(data)
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {/*{rhf dev tool}*/}
+      <DevTool control={control} />
+      {/*{rhf dev tool}*/}
       <TextField {...register('email')} label={'email'} errorMessage={errors.email?.message} />
       <TextField
         {...register('password')}

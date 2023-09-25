@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Tabs, TabsContent, Typography } from '@/components/ui'
+import { Tabs, Typography } from '@/components/ui'
 
 const meta = {
   title: 'Components/Tabs',

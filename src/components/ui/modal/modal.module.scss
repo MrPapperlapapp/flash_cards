@@ -29,7 +29,8 @@
 
   color: var(--color-light-100);
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     background: var(--color-dark-500);
     border-radius: 50%;
   }

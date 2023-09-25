@@ -17,7 +17,7 @@ export const Modal = ({
   useEffect(() => {
     const close = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose()
+        onClose?.()
       }
     }
     window.addEventListener('keydown', close)
@@ -53,7 +53,7 @@ export const Modal = ({
 type ModalProps = {
   isOpen?: boolean
   children?: ReactNode
-  onClose: () => void
+  onClose?: () => void
   showCloseButton?: boolean
   className?: string
 }

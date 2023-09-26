@@ -1,0 +1,72 @@
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 33px 80px 40px;
+
+  .nickNameContainer {
+    display: flex;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 10px;
+
+    .editNickNameButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 36px;
+      height: 36px;
+      padding: 0;
+
+      background: transparent;
+      border-radius: 50%;
+      box-shadow: none;
+
+      .editNickNameIcon {
+        width: 16px;
+        height: 16px;
+      }
+
+      &:focus-visible {
+        background: var(--color-dark-300);
+      }
+
+      &:not(.disabled):hover {
+        background: var(--color-dark-300);
+      }
+    }
+  }
+
+  .avatarContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .editAvatarButton {
+      position: absolute;
+      right: 4px;
+      bottom: 4px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 4px;
+
+      box-shadow: none;
+
+      .editAvatarIcon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .logOutButton {
+    margin-top: 10px;
+  }
+}

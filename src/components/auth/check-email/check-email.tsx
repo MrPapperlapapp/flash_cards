@@ -3,8 +3,7 @@ import { FC } from 'react'
 import s from './check-email.module.scss'
 
 import CheckEmailLogo from '@/assets/icons/checkEmailLogo.tsx'
-import {Button, Card, Typography} from '@/components'
-
+import { Button, Card, Typography } from '@/components'
 
 type PropsType = {
   email: string

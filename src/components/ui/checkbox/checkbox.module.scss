@@ -10,10 +10,10 @@ button {
     align-items: center;
 
     .labelText {
-      font-size: var(--font-size-s);
-      line-height: var(--line-height-m);
-      font-weight: var(--font-weight-regular);
       margin: 0 8px;
+      font-size: var(--font-size-s);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--line-height-m);
     }
   }
 
@@ -21,7 +21,7 @@ button {
     width: 24px;
     height: 24px;
 
-    .editNickNameIcon {
+    .icon {
       all: inherit;
 
       .check {
@@ -30,7 +30,7 @@ button {
     }
 
     &:disabled {
-      .editNickNameIcon {
+      .icon {
         color: var(--color-dark-100);
 
         .check {

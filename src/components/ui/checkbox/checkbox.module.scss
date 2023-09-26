@@ -21,7 +21,7 @@ button {
     width: 24px;
     height: 24px;
 
-    .icon {
+    .editNickNameIcon {
       all: inherit;
 
       .check {
@@ -30,7 +30,7 @@ button {
     }
 
     &:disabled {
-      .icon {
+      .editNickNameIcon {
         color: var(--color-dark-100);
 
         .check {

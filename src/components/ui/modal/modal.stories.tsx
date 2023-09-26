@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { Button, Modal } from '@/components'
+import { Button, Modal, SignIn } from '@/components'
 import { CheckEmail } from '@/components/auth/check-email'
 import { useState } from 'react'
 
@@ -27,14 +27,14 @@ export const Default: Story = {
     )
   },
   args: {
-    children: <CheckEmail email={'a@a.com'} />,
+    children: <SignIn onSubmit={() => {}} />,
   },
 }
 
 export const ModalWithCloseButton: Story = {
   ...Default,
   args: {
-    ...Default.args,
+    children: <CheckEmail email={'a@a.com'} />,
     showCloseButton: true,
   },
 }

@@ -1,7 +1,7 @@
 import { Button, Typography } from '@/components'
 import { Edit } from '@/assets/icons/drop-down/edit.tsx'
-import s from './profile.module.scss'
-export const ProfileBody = ({ onSubmit }: any) => {
+import s from '../profile.module.scss'
+export const ProfileInfo = ({ onSubmit }: any) => {
   return (
     <>
       <div className={s.nickNameContainer}>

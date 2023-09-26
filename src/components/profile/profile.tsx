@@ -1,9 +1,9 @@
 import { Button, Card, Typography } from '@/components'
 import { Avatar } from '@/components/ui/avatar'
 import { Edit } from '@/assets/icons/drop-down/edit.tsx'
+import EditProfile from '@/components/profile/edit/edit-profile.tsx'
+import { ProfileInfo } from '@/components/profile/info/profile-info.tsx'
 import s from './profile.module.scss'
-import EditProfile from '@/components/profile/edit-profile.tsx'
-import { ProfileBody } from '@/components/profile/profile-body.tsx'
 
 export const Profile = ({ onSubmit, isEdit }: ProfileProps) => {
   return (
@@ -25,7 +25,7 @@ export const Profile = ({ onSubmit, isEdit }: ProfileProps) => {
         </Button>
       </div>
       <div className={s.body}>
-        {isEdit ? <EditProfile onSubmit={onSubmit} /> : <ProfileBody onSubmit={onSubmit} />}
+        {isEdit ? <EditProfile onSubmit={onSubmit} /> : <ProfileInfo onSubmit={onSubmit} />}
       </div>
     </Card>
   )

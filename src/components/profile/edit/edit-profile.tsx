@@ -1,5 +1,5 @@
 import { Button, ControlledTextField } from '@/components'
-import s from './profile.module.scss'
+import s from '../profile.module.scss'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -13,7 +13,7 @@ const EditProfile = ({ onSubmit }: any) => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: {isValid },
   } = useForm<ProfileFormProps>({
     mode: 'onSubmit',
     defaultValues: {
@@ -21,11 +21,14 @@ const EditProfile = ({ onSubmit }: any) => {
     },
     resolver: zodResolver(profileSchema),
   })
+
+  const submitHandler = () => isValid && onSubmit
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={s.edit}>
         <ControlledTextField name={'nickName'} control={control} />
-        <Button variant={'primary'} fullWidth onClick={onSubmit}>
+        <Button variant={'primary'} fullWidth onClick={submitHandler}>
           Save
         </Button>
       </div>

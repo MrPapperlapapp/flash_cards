@@ -6,40 +6,6 @@
 
   padding: 33px 80px 40px;
 
-  .nickNameContainer {
-    display: flex;
-    align-items: center;
-    padding-top: 6px;
-    padding-bottom: 10px;
-
-    .editNickNameButton {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      width: 36px;
-      height: 36px;
-      padding: 0;
-
-      background: transparent;
-      border-radius: 50%;
-      box-shadow: none;
-
-      .editNickNameIcon {
-        width: 16px;
-        height: 16px;
-      }
-
-      &:focus-visible {
-        background: var(--color-dark-300);
-      }
-
-      &:not(.disabled):hover {
-        background: var(--color-dark-300);
-      }
-    }
-  }
-
   .avatarContainer {
     position: relative;
     display: flex;
@@ -66,7 +32,53 @@
     }
   }
 
-  .logOutButton {
-    margin-top: 10px;
+  .body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .edit {
+      & button {
+        margin-top: 10px;
+      }
+    }
+
+    .nickNameContainer {
+      display: flex;
+      align-items: center;
+      padding-top: 6px;
+      padding-bottom: 10px;
+
+      .editNickNameButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 36px;
+        height: 36px;
+        padding: 0;
+
+        background: transparent;
+        border-radius: 50%;
+        box-shadow: none;
+
+        .editNickNameIcon {
+          width: 16px;
+          height: 16px;
+        }
+
+        &:focus-visible {
+          background: var(--color-dark-300);
+        }
+
+        &:not(.disabled):hover {
+          background: var(--color-dark-300);
+        }
+      }
+    }
+
+    .logOutButton {
+      margin-top: 10px;
+    }
   }
 }

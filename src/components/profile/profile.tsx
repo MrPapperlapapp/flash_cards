@@ -1,42 +1,37 @@
 import { Button, Card, Typography } from '@/components'
 import { Avatar } from '@/components/ui/avatar'
-
-import s from './profile.module.scss'
 import { Edit } from '@/assets/icons/drop-down/edit.tsx'
+import s from './profile.module.scss'
+import EditProfile from '@/components/profile/edit-profile.tsx'
+import { ProfileBody } from '@/components/profile/profile-body.tsx'
 
-export const Profile = ({ name, avatarImg, title, email }: ProfileProps) => {
+export const Profile = ({ onSubmit, isEdit }: ProfileProps) => {
   return (
     <Card className={s.profileContainer}>
       <Typography variant={'large'} mb={27}>
-        {title}
+        Personal Information
       </Typography>
       <div className={s.avatarContainer}>
-        <Avatar userName={'Hallo'} size={96} image={avatarImg} className={s.avatar} />
+        <Avatar
+          userName={'Hallo'}
+          size={96}
+          image={
+            'https://t4.ftcdn.net/jpg/02/85/46/81/240_F_285468179_nY3iZePEB0ymN6s7LjI1lK9o90VwS6m5.jpg'
+          }
+          className={s.avatar}
+        />
         <Button variant={'secondary'} className={s.editAvatarButton}>
           <Edit className={s.editAvatarIcon} />
         </Button>
       </div>
-      <div className={s.nickNameContainer}>
-        <Typography variant={'h1'} mr={3}>
-          {name}
-        </Typography>
-        <Button variant={'primary'} className={s.editNickNameButton}>
-          <Edit className={s.editNickNameIcon} />
-        </Button>
+      <div className={s.body}>
+        {isEdit ? <EditProfile onSubmit={onSubmit} /> : <ProfileBody onSubmit={onSubmit} />}
       </div>
-      <Typography variant={'body2'} color={'var(--color-dark-300)'}>
-        {email}
-      </Typography>
-      <Button variant={'primaryWithIcon'} className={s.logOutButton}>
-        LogOut
-      </Button>
     </Card>
   )
 }
 
 type ProfileProps = {
-  title: string
-  avatarImg: string
-  name: string
-  email: string
+  onSubmit: () => void
+  isEdit: boolean
 }

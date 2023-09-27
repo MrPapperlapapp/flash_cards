@@ -10,3 +10,5 @@ export * from './tabs'
 export * from './card'
 export * from './controlled'
 export * from './modal'
+export * from './table'
+

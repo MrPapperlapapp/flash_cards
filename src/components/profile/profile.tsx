@@ -1,11 +1,11 @@
 import { Button, Card, Typography } from '@/components'
 import { Avatar } from '@/components/ui/avatar'
 import { Edit } from '@/assets/icons/drop-down/edit.tsx'
-import EditProfile from '@/components/profile/edit/edit-profile.tsx'
-import { ProfileInfo } from '@/components/profile/info/profile-info.tsx'
-import s from './profile.module.scss'
 
-export const Profile = ({ onSubmit, isEdit }: ProfileProps) => {
+import s from './profile.module.scss'
+import { Outlet } from 'react-router-dom'
+
+export const Profile = ({ onSubmit }: ProfileProps) => {
   return (
     <Card className={s.profileContainer}>
       <Typography variant={'large'} mb={27}>
@@ -25,7 +25,7 @@ export const Profile = ({ onSubmit, isEdit }: ProfileProps) => {
         </Button>
       </div>
       <div className={s.body}>
-        {isEdit ? <EditProfile onSubmit={onSubmit} /> : <ProfileInfo onSubmit={onSubmit} />}
+        <Outlet context={[onSubmit]} />
       </div>
     </Card>
   )
@@ -33,5 +33,4 @@ export const Profile = ({ onSubmit, isEdit }: ProfileProps) => {
 
 type ProfileProps = {
   onSubmit: () => void
-  isEdit: boolean
 }

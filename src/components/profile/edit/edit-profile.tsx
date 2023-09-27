@@ -3,18 +3,22 @@ import s from '../profile.module.scss'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useNavigate, useOutletContext } from 'react-router-dom'
+import { navigate } from '@storybook/addon-links'
 
 const profileSchema = z.object({
   nickName: z.string().min(3, 'Min 3 Chars').nonempty('Pls enter Name'),
 })
 
 type ProfileFormProps = z.infer<typeof profileSchema>
-const EditProfile = ({ onSubmit }: any) => {
-  const {
-    handleSubmit,
-    control,
-    formState: {isValid },
-  } = useForm<ProfileFormProps>({
+
+type OutletContextType = {
+  onSubmit: () => void
+}
+const EditProfile = () => {
+  const navigate = useNavigate()
+  const { onSubmit } = useOutletContext<OutletContextType>()
+  const { handleSubmit, control } = useForm<ProfileFormProps>({
     mode: 'onSubmit',
     defaultValues: {
       nickName: '',
@@ -22,13 +26,11 @@ const EditProfile = ({ onSubmit }: any) => {
     resolver: zodResolver(profileSchema),
   })
 
-  const submitHandler = () => isValid && onSubmit
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={s.edit}>
         <ControlledTextField name={'nickName'} control={control} />
-        <Button variant={'primary'} fullWidth onClick={submitHandler}>
+        <Button variant={'primary'} fullWidth onClick={() => navigate('/')}>
           Save
         </Button>
       </div>

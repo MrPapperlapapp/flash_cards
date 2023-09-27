@@ -1,7 +1,9 @@
 import { Button, Typography } from '@/components'
 import { Edit } from '@/assets/icons/drop-down/edit.tsx'
 import s from '../profile.module.scss'
-export const ProfileInfo = ({ onSubmit }: any) => {
+import { useNavigate } from 'react-router-dom'
+export const ProfileInfo = () => {
+  const navigate = useNavigate()
   return (
     <>
       <div className={s.nickNameContainer}>
@@ -12,7 +14,7 @@ export const ProfileInfo = ({ onSubmit }: any) => {
           variant={'primary'}
           type={'button'}
           className={s.editNickNameButton}
-          onClick={onSubmit}
+          onClick={() => navigate('edit')}
         >
           <Edit className={s.editNickNameIcon} />
         </Button>

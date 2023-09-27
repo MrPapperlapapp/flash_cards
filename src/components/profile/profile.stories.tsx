@@ -1,6 +1,7 @@
 import { Profile } from '@/components/profile/profile.tsx'
 import { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
 const meta = {
   title: 'profile/Profile',
@@ -22,10 +23,12 @@ type Story = StoryObj<typeof meta>
 export const ProfilePage: Story = {
   args: {
     onSubmit: () => {},
-    isEdit: false,
   },
   render: args => {
-    const [isEdit, setIsEdit] = useState(false)
-    return <Profile {...args} isEdit={isEdit} onSubmit={() => setIsEdit(p => !p)} />
+    return (
+      <BrowserRouter>
+        <Profile {...args} />
+      </BrowserRouter>
+    )
   },
 }

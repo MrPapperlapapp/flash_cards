@@ -1,9 +1,11 @@
-import { createPortal } from 'react-dom'
 import { ReactNode, useEffect } from 'react'
 
-import s from './modal.module.scss'
-import { Close } from '@/assets/icons/text-field/close.tsx'
 import { clsx } from 'clsx'
+import { createPortal } from 'react-dom'
+
+import s from './modal.module.scss'
+
+import { Close } from '@/assets/icons/text-field/close.tsx'
 
 export const Modal = ({
   children,
@@ -20,7 +22,9 @@ export const Modal = ({
         onClose?.()
       }
     }
+
     window.addEventListener('keydown', close)
+
     return () => window.removeEventListener('keydown', close)
   }, [])
 

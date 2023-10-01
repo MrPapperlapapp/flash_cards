@@ -1,13 +1,21 @@
 import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router-dom'
 
 import { privateRoutes, publicRoutes } from '@/app/router/routes.tsx'
+import {Layout} from "@/components/layout";
 
 const routes = createBrowserRouter([
   {
-    element: <PrivateRoutes />,
-    children: privateRoutes,
+    path: '/',
+    element: <Layout/>,
+    children: [
+      {
+        element: <PrivateRoutes />,
+        children: privateRoutes,
+      },
+      ...publicRoutes,
+    ]
   },
-  ...publicRoutes,
+
 ])
 
 export const Router = () => {

@@ -6,7 +6,7 @@ import { Header } from '@/components/ui/header'
 export const Layout = () => {
   return (
     <>
-      <Header data={{ avatar: '', email: '', name: '' }} logout={() => {}} />
+      <Header data={null} logout={() => {}} />
       <div className={s.content}>
         <Outlet />
       </div>

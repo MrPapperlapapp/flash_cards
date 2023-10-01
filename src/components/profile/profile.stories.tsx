@@ -1,5 +1,6 @@
-import { Profile } from '@/components/profile/profile.tsx'
 import { Meta, StoryObj } from '@storybook/react'
+
+import { Profile } from '@/components/profile/profile.tsx'
 
 const meta = {
   title: 'profile/Profile',
@@ -14,6 +15,7 @@ const meta = {
   ],
   argTypes: {},
 } satisfies Meta<typeof Profile>
+
 export default meta
 
 type Story = StoryObj<typeof meta>

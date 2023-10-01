@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import {CreateNewPassword} from "@/components";
 
-
-
-
+import { CreateNewPassword } from '@/components'
 
 const meta = {
   title: 'Auth/Create New Password',
@@ -11,9 +8,9 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     Story => (
-        <div style={{ margin: '3em', display: 'flex', justifyContent: 'center' }}>
-          <Story />
-        </div>
+      <div style={{ margin: '3em', display: 'flex', justifyContent: 'center' }}>
+        <Story />
+      </div>
     ),
   ],
   argTypes: {},

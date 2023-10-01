@@ -1,8 +1,8 @@
+import s from './profile.module.scss'
+
+import { Edit } from '@/assets/icons/drop-down/edit.tsx'
 import { Button, Card, Typography } from '@/components'
 import { Avatar } from '@/components/ui/avatar'
-
-import s from './profile.module.scss'
-import { Edit } from '@/assets/icons/drop-down/edit.tsx'
 
 export const Profile = ({ name, avatarImg, title, email }: ProfileProps) => {
   return (

@@ -1,7 +1,9 @@
+import { useState } from 'react'
+
 import { Meta, StoryObj } from '@storybook/react'
+
 import { Button, Modal, SignIn } from '@/components'
 import { CheckEmail } from '@/components/auth/check-email'
-import { useState } from 'react'
 
 const meta = {
   title: 'Components/Modal',
@@ -15,6 +17,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: args => {
     const [open, setOpen] = useState(false)
+
     return (
       <>
         <div style={{ display: 'flex', justifyContent: 'center' }}>

@@ -4,13 +4,18 @@
   align-items: center;
   justify-content: center;
 
+  max-width: 26.25rem;
+  margin: 0 auto;
   padding: 33px 80px 40px;
 
   .avatarContainer {
     position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin-bottom: 20px;
 
     .editAvatarButton {
       position: absolute;
@@ -35,8 +40,9 @@
   .body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
     width: 100%;
 
     .edit {
@@ -48,8 +54,6 @@
     .nickNameContainer {
       display: flex;
       align-items: center;
-      padding-top: 6px;
-      padding-bottom: 10px;
 
       .editNickNameButton {
         display: flex;

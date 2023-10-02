@@ -27,7 +27,7 @@ export const Header: FC<Props> = memo(({ data, logout }) => {
   return (
     <div className={s.root}>
       <div className={s.container}>
-        <Link to="/packs" className={s.link}>
+        <Link to="/" className={s.link}>
           <Logo className={s.logo} />
         </Link>
         {data ? (

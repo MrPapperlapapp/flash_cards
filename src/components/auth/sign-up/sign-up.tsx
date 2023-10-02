@@ -2,13 +2,14 @@ import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
-import { BrowserRouter, Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './sign-up.module.scss'
 
 import { Card, ControlledTextField, Typography } from '@/components'
 import { Button } from '@/components/ui/button'
+import { useSignUpMutation } from '@/services/auth/auth.ts'
 
 const signUpSchema = z
   .object({
@@ -23,15 +24,11 @@ const signUpSchema = z
 
 export type SignUpFormProps = z.infer<typeof signUpSchema>
 
-type Props = {
-  onSubmit: (data: SignUpFormProps) => void
-  className?: string
-}
+export const SignUp = () => {
+  const [signUp, { isSuccess }] = useSignUpMutation()
+  const classes = clsx(s.card)
 
-export const SignUp = ({ onSubmit, className }: Props) => {
-  const classes = clsx(s.card, className)
-
-  const { control, handleSubmit } = useForm<SignUpFormProps>({
+  const { control, handleSubmit, getValues } = useForm<SignUpFormProps>({
     mode: 'onSubmit',
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -40,7 +37,8 @@ export const SignUp = ({ onSubmit, className }: Props) => {
       confirmPassword: '',
     },
   })
-
+  const onSubmit = () => signUp({ email: getValues('email'), password: getValues('password') })
+  if (isSuccess) return <Navigate to={'/login'} />
   return (
     <>
       <DevTool control={control} />
@@ -78,11 +76,9 @@ export const SignUp = ({ onSubmit, className }: Props) => {
         <Typography variant="body2" className={s.caption}>
           Already have an account?
         </Typography>
-        <BrowserRouter>
-          <Typography variant="link1" as={Link} to="/sign-in" className={s.signInLink}>
-            Sign In
-          </Typography>
-        </BrowserRouter>
+        <Typography variant="link1" as={Link} to="/sign-in" className={s.signInLink}>
+          Sign In
+        </Typography>
       </Card>
     </>
   )

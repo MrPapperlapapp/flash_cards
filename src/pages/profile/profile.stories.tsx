@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
-import { Profile } from '@/components/profile/profile.tsx'
+import { Profile } from '@/pages/profile/profile.tsx'
 
 const meta = {
   title: 'profile/Profile',

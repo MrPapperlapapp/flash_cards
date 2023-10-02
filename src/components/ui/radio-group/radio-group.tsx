@@ -7,7 +7,6 @@ import s from './radio-group.module.scss'
 
 import { Typography } from '@/components/ui'
 
-
 export const RadioGroup = ({ options, onValueChange, ...rest }: RadioGroupType) => {
   return (
     <RadioGroupRoot onValueChange={onValueChange} {...rest}>

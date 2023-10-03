@@ -13,7 +13,7 @@ import { DropDown, DropDownItem, DropDownItemWithIcon } from '@/components/ui/dr
 import { ProfileInfo, ProfileInfoPropsType } from '@/components/ui/header/profile-info'
 
 type Props = {
-  data: ProfileInfoPropsType | null
+  data: ProfileInfoPropsType | undefined
   logout: () => void
 }
 

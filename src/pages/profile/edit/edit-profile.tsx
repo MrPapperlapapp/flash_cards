@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useNavigate } from 'react-router-dom'
-import { useGetMeQuery } from '@/services/auth/auth.ts'
+import { useGetMeQuery, useUpdateProfileMutation } from '@/services/auth/auth.ts'
 
 const profileSchema = z.object({
   nickName: z.string().min(3, 'Min 3 Chars').nonempty('Pls enter Name'),
@@ -15,19 +15,23 @@ type ProfileFormProps = z.infer<typeof profileSchema>
 export const EditProfile = () => {
   const navigate = useNavigate()
   const { data } = useGetMeQuery()
-  const { handleSubmit, control } = useForm<ProfileFormProps>({
+  const [updateUserInfo, { isLoading }] = useUpdateProfileMutation()
+  const { handleSubmit, control, getValues } = useForm<ProfileFormProps>({
     mode: 'onSubmit',
     defaultValues: {
-      nickName: data.name,
+      nickName: data?.name || '',
     },
     resolver: zodResolver(profileSchema),
   })
-
+  const onSubmit = () => {
+    updateUserInfo({ name: getValues('nickName'), email: data!.email })
+    navigate('/profile')
+  }
   return (
-    <form onSubmit={handleSubmit(() => {})}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className={s.edit}>
         <ControlledTextField name={'nickName'} control={control} />
-        <Button variant={'primary'} fullWidth onClick={() => navigate('/profile')}>
+        <Button variant={'primary'} fullWidth disabled={isLoading}>
           Save
         </Button>
       </div>

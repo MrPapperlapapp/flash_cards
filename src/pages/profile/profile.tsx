@@ -8,13 +8,14 @@ import { useGetMeQuery } from '@/services/auth/auth.ts'
 
 export const Profile = () => {
   const { data } = useGetMeQuery()
+
   return (
     <Card className={s.profileContainer}>
       <Typography variant={'large'} mb={27}>
         Personal Information
       </Typography>
       <div className={s.avatarContainer}>
-        <Avatar userName={data.name} size={96} image={data?.avatar} className={s.avatar} />
+        <Avatar userName={data!.name} size={96} image={data?.avatar} className={s.avatar} />
         <Button variant={'secondary'} className={s.editAvatarButton}>
           <Edit className={s.editAvatarIcon} />
         </Button>

@@ -2,13 +2,14 @@ import { baseApi } from '@/services/base-api.ts'
 import {
   LogInBodyType,
   LogInResponseType,
+  ProfileBodyType,
   SignUpBodyType,
-  SignUpResponseType,
+  UserType,
 } from './auth.types.ts'
 
 const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getMe: builder.query<any | null, void>({
+    getMe: builder.query<UserType | undefined, void>({
       async queryFn(_name, _api, _extraOptions, baseQuery) {
         const result = await baseQuery({
           url: `v1/auth/me`,
@@ -16,9 +17,9 @@ const authApi = baseApi.injectEndpoints({
         })
         if (result.error) {
           // but refetch on another error
-          return { data: null }
+          return { data: undefined }
         }
-        return { data: result.data }
+        return { data: result.data as UserType }
       },
       providesTags: ['Me'],
     }),
@@ -36,7 +37,16 @@ const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['Me'],
     }),
-    signUp: builder.mutation<SignUpResponseType, SignUpBodyType>({
+    logOut: builder.mutation<void, void>({
+      query: () => {
+        return {
+          url: 'v1/auth/logout',
+          method: 'POST',
+        }
+      },
+      invalidatesTags: ['Me'],
+    }),
+    signUp: builder.mutation<UserType, SignUpBodyType>({
       query: body => {
         return {
           url: 'v1/auth/sign-up',
@@ -46,7 +56,40 @@ const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['Me'],
     }),
+    updateProfile: builder.mutation<UserType, ProfileBodyType>({
+      query: ({ name, email }) => {
+        return {
+          url: 'v1/auth/me',
+          method: 'PATCH',
+          body: {
+            name,
+            email,
+          },
+        }
+      },
+      async onQueryStarted({ name }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          authApi.util.updateQueryData('getMe', undefined, draft => {
+            if (draft) {
+              draft.name = name
+            }
+          })
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
+      invalidatesTags: ['Me'],
+    }),
   }),
 })
 
-export const { useGetMeQuery, useLogInMutation, useSignUpMutation } = authApi
+export const {
+  useGetMeQuery,
+  useLogInMutation,
+  useSignUpMutation,
+  useUpdateProfileMutation,
+  useLogOutMutation,
+} = authApi

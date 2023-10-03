@@ -9,13 +9,17 @@ export type LogInResponseType = {
 }
 
 export type SignUpBodyType = {
-  name?: string
+  name: string
   password: string
   email: string
   sendConfirmationEmail?: boolean
 }
+export type ProfileBodyType = {
+  email: string
+  name: string
+}
 
-export type SignUpResponseType = {
+export type UserType = {
   avatar: string
   id: string
   email: string

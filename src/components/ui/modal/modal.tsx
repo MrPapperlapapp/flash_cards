@@ -6,6 +6,7 @@ import { createPortal } from 'react-dom'
 import s from './modal.module.scss'
 
 import { Close } from '@/assets/icons/text-field/close.tsx'
+import { Typography } from '@/components'
 
 export const Modal = ({
   children,
@@ -13,6 +14,7 @@ export const Modal = ({
   onClose,
   className,
   showCloseButton = false,
+  title,
 }: ModalProps) => {
   if (!isOpen) return null
 
@@ -32,6 +34,7 @@ export const Modal = ({
     modal: clsx(s.modal, className),
     modalWrapper: s.modalWrapper,
     button: s.closeButton,
+    top: s.top,
   }
 
   return (
@@ -40,12 +43,15 @@ export const Modal = ({
         <>
           <div className={classNames.modalWrapper} onClick={onClose}></div>
           <div className={classNames.modal}>
+            <div className={classNames.top}>
+              {title && <Typography variant={'h2'}>{title}</Typography>}
+              {showCloseButton && (
+                <button className={classNames.button} onClick={onClose}>
+                  <Close />
+                </button>
+              )}
+            </div>
             {children}
-            {showCloseButton && (
-              <button className={classNames.button} onClick={onClose}>
-                <Close />
-              </button>
-            )}
           </div>
         </>,
         document.body
@@ -60,4 +66,5 @@ type ModalProps = {
   onClose?: () => void
   showCloseButton?: boolean
   className?: string
+  title?: string
 }

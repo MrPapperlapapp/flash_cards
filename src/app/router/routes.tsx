@@ -4,8 +4,9 @@ import { Decks } from '@/pages/decks/decks.tsx'
 import { Profile } from '@/pages/profile'
 import { ProfileInfo } from '@/pages/profile/info'
 import { EditProfile } from '@/pages/profile/edit'
-import { SignIn } from '@/components'
+import { CheckEmail, SignIn } from '@/components'
 import { SignUp } from '@/components/auth/sign-up'
+import { ForgotPassword } from '@/components/auth/forgot-password'
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -15,6 +16,14 @@ export const publicRoutes: RouteObject[] = [
   {
     path: '/sign-up',
     element: <SignUp />,
+  },
+  {
+    path: '/recover-password',
+    element: <ForgotPassword />,
+  },
+  {
+    path: '/check-email',
+    element: <CheckEmail email={'a@a.com'} />,
   },
 ]
 

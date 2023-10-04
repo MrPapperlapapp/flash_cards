@@ -17,6 +17,29 @@
 
     margin-bottom: 20px;
 
+    .editAvatarLabel {
+      cursor: pointer;
+
+      .editAvatarInput {
+        all: unset;
+
+        position: absolute;
+        z-index: -1;
+
+        overflow: hidden;
+
+        width: 0.1px;
+        height: 0.1px;
+
+        opacity: 0;
+      }
+
+      .editAvatarIcon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
     .editAvatarButton {
       position: absolute;
       right: 4px;
@@ -29,11 +52,6 @@
       padding: 4px;
 
       box-shadow: none;
-
-      .editAvatarIcon {
-        width: 16px;
-        height: 16px;
-      }
     }
   }
 

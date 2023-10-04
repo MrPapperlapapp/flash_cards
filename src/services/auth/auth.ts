@@ -47,30 +47,32 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: ['Me'],
     }),
     signUp: builder.mutation<UserType, SignUpBodyType>({
-      query: body => {
+      query: userData => {
         return {
           url: 'v1/auth/sign-up',
           method: 'POST',
-          body,
+          body: userData,
         }
       },
       invalidatesTags: ['Me'],
     }),
     updateProfile: builder.mutation<UserType, ProfileBodyType>({
-      query: ({ name, email }) => {
+      query: patch => {
+        const formData = new FormData()
+        patch.name && formData.append('name', patch.name)
+        patch.email && formData.append('email', patch.email)
+        patch.avatar && formData.append('avatar', patch.avatar)
         return {
           url: 'v1/auth/me',
           method: 'PATCH',
-          body: {
-            name,
-            email,
-          },
+          formData: true,
+          body: formData,
         }
       },
       async onQueryStarted({ name }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           authApi.util.updateQueryData('getMe', undefined, draft => {
-            if (draft) {
+            if (draft && name) {
               draft.name = name
             }
           })

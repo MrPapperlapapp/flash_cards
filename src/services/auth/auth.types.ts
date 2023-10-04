@@ -15,8 +15,9 @@ export type SignUpBodyType = {
   sendConfirmationEmail?: boolean
 }
 export type ProfileBodyType = {
-  email: string
-  name: string
+  email?: string
+  name?: string
+  avatar?: any
 }
 
 export type UserType = {

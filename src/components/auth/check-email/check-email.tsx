@@ -23,7 +23,7 @@ export const CheckEmail = () => {
           {location.state.email}
         </Typography>
       </div>
-      <Button variant={'primary'} as={'a'} href={'/sign-in'} fullWidth={true} className={s.button}>
+      <Button variant={'primary'} as={'a'} href={'/login'} fullWidth={true} className={s.button}>
         Back to Sign In
       </Button>
     </Card>

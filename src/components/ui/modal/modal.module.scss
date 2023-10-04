@@ -1,8 +1,16 @@
+@import '@/styles/mixin';
+
 .modalWrapper {
   position: fixed;
   z-index: 50;
   inset: 0;
   background: rgb(0 0 0 / 70%);
+}
+
+.top {
+  @include flex(row, 0, 0, center, space-between);
+
+  padding: 15px 25px;
 }
 
 .modal {
@@ -13,12 +21,12 @@
   transform: translate(-50%, -50%);
 }
 
+.typography {
+  padding: 20px 25px;
+}
+
 .closeButton {
   cursor: pointer;
-
-  position: absolute;
-  top: 5px;
-  right: 5px;
 
   display: flex;
   align-items: center;

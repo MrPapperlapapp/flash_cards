@@ -11,4 +11,5 @@ export * from './card'
 export * from './controlled'
 export * from './modal'
 export * from './table'
+export * from './grade'
 

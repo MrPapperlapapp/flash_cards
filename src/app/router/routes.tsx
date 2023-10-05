@@ -1,6 +1,6 @@
 import { RouteObject } from 'react-router-dom'
 
-import { Decks } from '@/pages/decks/decks.tsx'
+import { Packs } from '@/pages/pack-list/pack-list.tsx'
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -12,6 +12,6 @@ export const publicRoutes: RouteObject[] = [
 export const privateRoutes: RouteObject[] = [
   {
     path: '/',
-    element: <Decks />,
+    element: <Packs />,
   },
 ]

@@ -50,7 +50,7 @@ export const Header: FC<Props> = memo(({ data, logout }) => {
             </DropDown>
           </div>
         ) : (
-          <Button as={Link} to="/sign-in">
+          <Button as={Link} to="/login">
             Sign In
           </Button>
         )}

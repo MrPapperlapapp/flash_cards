@@ -9,7 +9,8 @@ export type LogInResponseType = {
 }
 
 export type SignUpBodyType = {
-  name: string
+  html?: string
+  name?: string
   password: string
   email: string
   sendConfirmationEmail?: boolean
@@ -19,12 +20,16 @@ export type ProfileBodyType = {
   name?: string
   avatar?: any
 }
-
+export type RecoveryPassBodyType = {
+  html: string
+  email: string
+  subject: string
+}
 export type UserType = {
   avatar: string
   id: string
   email: string
-  isEmailVerified: true
+  isEmailVerified: boolean
   name: string
   created: string
   updated: string

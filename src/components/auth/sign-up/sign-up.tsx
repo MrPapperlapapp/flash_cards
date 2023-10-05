@@ -26,8 +26,8 @@ export type SignUpFormProps = z.infer<typeof signUpSchema>
 
 export const SignUp = () => {
   const [signUp, { isSuccess }] = useSignUpMutation()
-  const classes = clsx(s.card)
 
+  const classes = clsx(s.card)
   const { control, handleSubmit, getValues } = useForm<SignUpFormProps>({
     mode: 'onSubmit',
     resolver: zodResolver(signUpSchema),
@@ -37,8 +37,14 @@ export const SignUp = () => {
       confirmPassword: '',
     },
   })
-  const onSubmit = () => signUp({ email: getValues('email'), password: getValues('password') })
   if (isSuccess) return <Navigate to={'/login'} />
+  const onSubmit = () =>
+    signUp({
+      html: `<b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://localhost:3000/confirm-email/##token##">Confirm email</a>. If it doesn't work, copy and paste the following link in your browser:<br/>http://localhost:3000/confirm-email/##token##`,
+      email: getValues('email'),
+      password: getValues('password'),
+    })
+
   return (
     <>
       <DevTool control={control} />

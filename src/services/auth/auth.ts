@@ -3,6 +3,7 @@ import {
   LogInBodyType,
   LogInResponseType,
   ProfileBodyType,
+  RecoveryPassBodyType,
   SignUpBodyType,
   UserType,
 } from './auth.types.ts'
@@ -54,7 +55,6 @@ const authApi = baseApi.injectEndpoints({
           body: userData,
         }
       },
-      invalidatesTags: ['Me'],
     }),
     updateProfile: builder.mutation<UserType, ProfileBodyType>({
       query: patch => {
@@ -85,7 +85,7 @@ const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['Me'],
     }),
-    recoveryPassword: builder.mutation<any, any>({
+    recoveryPassword: builder.mutation<void, RecoveryPassBodyType>({
       query: args => {
         return {
           url: 'v1/auth/recover-password',

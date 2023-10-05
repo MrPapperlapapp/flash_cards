@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  background-color: inherit;
+
+  & .button {
+    cursor: pointer;
+
+    width: 26px;
+    height: 26px;
+    padding: 4px 5px;
+
+    background-color: inherit;
+    border: none;
+  }
+}

@@ -23,7 +23,7 @@ export const publicRoutes: RouteObject[] = [
   },
   {
     path: '/check-email',
-    element: <CheckEmail email={'a@a.com'} />,
+    element: <CheckEmail />,
   },
 ]
 

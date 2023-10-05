@@ -8,6 +8,7 @@ import s from './forgot-password.module.scss'
 
 import { Card, ControlledTextField, Typography } from '@/components'
 import { Button } from '@/components/ui/button'
+import { useRecoveryPasswordMutation } from '@/services/auth/auth.ts'
 
 const signUpSchema = z.object({
   email: z.string().email('Invalid email address').nonempty('Enter email'),
@@ -16,6 +17,7 @@ const signUpSchema = z.object({
 export type SignUpFormProps = z.infer<typeof signUpSchema>
 
 export const ForgotPassword = () => {
+  const [passRecovery] = useRecoveryPasswordMutation()
   const navigate = useNavigate()
   const classes = clsx(s.card)
 
@@ -26,7 +28,16 @@ export const ForgotPassword = () => {
       email: '',
     },
   })
-  const onSubmit = () => navigate('/check-email', { state: { email: getValues('email') } })
+  const onSubmit = () => {
+    passRecovery({
+      html: `<h1>Hi, ##name##</h1><p>Click <a href=${getValues(
+        'email'
+      )}>here</a> to recover your password</p>`,
+      email: getValues('email'),
+      subject: 'Recovery Password',
+    })
+    navigate('/check-email', { state: { email: getValues('email') } })
+  }
   return (
     <>
       <Card className={classes}>
@@ -53,7 +64,7 @@ export const ForgotPassword = () => {
         <Typography variant="body2" className={s.caption}>
           Did you remember your password?
         </Typography>
-        <Typography variant="link1" as={Link} to="/sign-in" className={s.signInLink}>
+        <Typography variant="link1" as={Link} to="/login" className={s.signInLink}>
           Try logging in
         </Typography>
       </Card>

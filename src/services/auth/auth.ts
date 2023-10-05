@@ -85,6 +85,15 @@ const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['Me'],
     }),
+    recoveryPassword: builder.mutation<any, any>({
+      query: args => {
+        return {
+          url: 'v1/auth/recover-password',
+          method: 'POST',
+          body: args,
+        }
+      },
+    }),
   }),
 })
 
@@ -94,4 +103,5 @@ export const {
   useSignUpMutation,
   useUpdateProfileMutation,
   useLogOutMutation,
+  useRecoveryPasswordMutation,
 } = authApi

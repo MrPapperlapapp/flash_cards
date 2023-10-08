@@ -1,0 +1,19 @@
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 25px 25px;
+}
+
+.button {
+  margin-right: 30px;
+}
+
+.modal {
+  background: var(--color-dark-700);
+  border: 1px solid var(--color-dark-500);
+}
+
+.typography {
+  padding: 25px;
+  border-top: 1px solid var(--color-dark-500);
+}

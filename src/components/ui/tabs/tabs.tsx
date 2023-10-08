@@ -7,7 +7,15 @@ import s from './tabs.module.scss'
 
 import { Typography } from '@/components/ui'
 
-export const Tabs = ({ tabs, value, defaultValue, label, fullWidth, onValueChange }: TabsProps) => {
+export const Tabs = ({
+  tabs,
+  value,
+  defaultValue,
+  label,
+  fullWidth,
+  onValueChange,
+  className,
+}: TabsProps) => {
   return (
     <RadixTabs.Root
       className={s.tabsRoot}
@@ -23,7 +31,7 @@ export const Tabs = ({ tabs, value, defaultValue, label, fullWidth, onValueChang
       <RadixTabs.List className={s.tabsList}>
         {tabs.map(el => (
           <RadixTabs.Trigger
-            className={clsx(s.tabsTrigger, fullWidth && s.fullWidth)}
+            className={clsx(s.tabsTrigger, fullWidth && s.fullWidth, className)}
             key={el.value}
             value={el.value}
             disabled={el.disabled}
@@ -39,7 +47,7 @@ export const Tabs = ({ tabs, value, defaultValue, label, fullWidth, onValueChang
 export type TabsType = {
   value: string
   label: string
-  disabled: boolean
+  disabled?: boolean
 }
 
 type TabsProps = {
@@ -50,4 +58,5 @@ type TabsProps = {
   label?: string
   fullWidth?: boolean
   onValueChange?: (value: string) => void
+  className?: string
 }

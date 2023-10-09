@@ -1,4 +1,4 @@
-import { Deck, DecksParams, DecksResponse } from './'
+import { Deck, DecksParams, DecksResponse } from './index.ts'
 
 import { baseApi } from '@/services/base-api.ts'
 

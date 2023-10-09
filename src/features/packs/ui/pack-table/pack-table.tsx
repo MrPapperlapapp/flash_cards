@@ -3,8 +3,8 @@ import { FC, memo } from 'react'
 import s from './pack-table.module.scss'
 
 import { Table, TableHeaderProps } from '@/components/ui/table'
-import { Deck } from '@/feature/packs/model/services'
-import { PackRow } from '@/feature/packs/ui/pack-row/pack-row.tsx'
+import { Deck } from '@/features/packs/model/services'
+import { PackRow } from '@/features/packs/ui/pack-row/pack-row.tsx'
 const columns = [
   {
     key: 'name',

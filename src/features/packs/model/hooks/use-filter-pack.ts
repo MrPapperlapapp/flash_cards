@@ -3,8 +3,8 @@ import {
   searchNameSelector,
   sliderValueSelector,
   tabValueSelector,
-} from '@/feature/packs/model/selectors'
-import { packsActions } from '@/feature/packs/model/slices/packs.slice.ts'
+} from '@/features/packs/model/selectors'
+import { packsActions } from '@/features/packs/model/slices/packs.slice.ts'
 
 export const usePacksFilter = () => {
   const searchName = useAppSelector(searchNameSelector)

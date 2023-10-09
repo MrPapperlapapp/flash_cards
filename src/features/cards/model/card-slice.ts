@@ -26,3 +26,4 @@ export const cardsSlice = createSlice({
 
 export const { setSearchByQuestion, setCurrentPage, setItemsPerPage, setOrderBy } =
   cardsSlice.actions
+export const cardsReducer = cardsSlice.reducer

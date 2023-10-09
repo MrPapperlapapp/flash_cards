@@ -19,6 +19,7 @@
   margin: 0 auto;
   padding-inline: $padding-inline;
 }
+
 @mixin interactive-circle($active-color, $hover-color: --color-dark-500, $circle-size: 36px) {
   &::before,
   &::after {

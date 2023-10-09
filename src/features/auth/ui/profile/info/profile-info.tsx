@@ -1,8 +1,8 @@
 import { Button, Typography } from '@/components'
 import { Edit } from '@/assets/icons/drop-down/edit.tsx'
-import s from '../profile.module.scss'
+import s from '../../../../../pages/profile/profile.module.scss'
 import { useNavigate } from 'react-router-dom'
-import { useGetMeQuery, useLogOutMutation } from '@/services/auth/auth.ts'
+import { useGetMeQuery, useLogOutMutation } from '@/features/auth/model/services/auth.ts'
 
 export const ProfileInfo = () => {
   const { data } = useGetMeQuery()

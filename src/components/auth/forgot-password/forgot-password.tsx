@@ -8,7 +8,7 @@ import s from './forgot-password.module.scss'
 
 import { Card, ControlledTextField, Typography } from '@/components'
 import { Button } from '@/components/ui/button'
-import { useRecoveryPasswordMutation } from '@/services/auth/auth.ts'
+import { useRecoveryPasswordMutation } from '@/features/auth/model/services/auth.ts'
 
 const signUpSchema = z.object({
   email: z.string().email('Invalid email address').nonempty('Enter email'),
@@ -30,9 +30,7 @@ export const ForgotPassword = () => {
   })
   const onSubmit = () => {
     passRecovery({
-      html: `<h1>Hi, ##name##</h1><p>Click <a href=${getValues(
-        'email'
-      )}>here</a> to recover your password</p>`,
+      html: `"<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/recover-password/##token##">here</a> to recover your password</p>"`,
       email: getValues('email'),
       subject: 'Recovery Password',
     })

@@ -25,6 +25,10 @@ export type RecoveryPassBodyType = {
   email: string
   subject: string
 }
+export type ResetPassBOdyType = {
+  token: string
+  password: string
+}
 export type UserType = {
   avatar: string
   id: string

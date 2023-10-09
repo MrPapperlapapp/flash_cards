@@ -1,10 +1,10 @@
 import { Button, ControlledTextField } from '@/components'
-import s from '../profile.module.scss'
+import s from '../../../../../pages/profile/profile.module.scss'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useNavigate } from 'react-router-dom'
-import { useGetMeQuery, useUpdateProfileMutation } from '@/services/auth/auth.ts'
+import { useGetMeQuery, useUpdateProfileMutation } from '@/features/auth/model/services/auth.ts'
 
 const profileSchema = z.object({
   nickName: z.string().min(3, 'Min 3 Chars').nonempty('Pls enter Name'),

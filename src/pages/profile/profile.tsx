@@ -4,7 +4,7 @@ import { Edit } from '@/assets/icons/drop-down/edit.tsx'
 
 import s from './profile.module.scss'
 import { Outlet } from 'react-router-dom'
-import { useGetMeQuery, useUpdateProfileMutation } from '@/services/auth/auth.ts'
+import { useGetMeQuery, useUpdateProfileMutation } from '@/features/auth/model/services/auth.ts'
 import { Label } from '@radix-ui/react-label'
 import { ChangeEvent, useRef } from 'react'
 

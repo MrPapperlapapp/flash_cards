@@ -9,7 +9,7 @@ import s from './sign-in.module.scss'
 import { Button, ControlledTextField, Typography } from '@/components'
 import { Card } from '@/components/ui/card'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox'
-import { useGetMeQuery, useLogInMutation } from '@/services/auth/auth.ts'
+import { useGetMeQuery, useLogInMutation } from '@/features/auth/model/services/auth.ts'
 
 const signInSchema = z.object({
   email: z.string().email('Invalid email address').nonempty('Enter email'),

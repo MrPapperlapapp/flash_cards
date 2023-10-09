@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 import s from './layout.module.scss'
 
 import { Header } from '@/components/ui/header'
-import { useGetMeQuery, useLogOutMutation } from '@/services/auth/auth.ts'
+import { useGetMeQuery, useLogOutMutation } from '@/features/auth/model/services/auth.ts'
 
 export const Layout = () => {
   const { data, isLoading } = useGetMeQuery()

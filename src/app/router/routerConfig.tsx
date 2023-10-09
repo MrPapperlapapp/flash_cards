@@ -2,12 +2,12 @@ import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-rou
 
 import { privateRoutes, publicRoutes } from '@/app/router/routes.tsx'
 import { Layout } from '@/components/layout'
-import { useGetMeQuery } from '@/services/auth/auth.ts'
+import { useGetMeQuery } from '@/features/auth/model/services/auth.ts'
 
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <Layout/>,
+    element: <Layout />,
     children: [
       {
         element: <PrivateRoutes />,
@@ -16,7 +16,6 @@ const routes = createBrowserRouter([
       ...publicRoutes,
     ],
   },
-
 ])
 
 export const Router = () => {

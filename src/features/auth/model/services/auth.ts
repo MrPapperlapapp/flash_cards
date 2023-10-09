@@ -4,6 +4,7 @@ import {
   LogInResponseType,
   ProfileBodyType,
   RecoveryPassBodyType,
+  ResetPassBOdyType,
   SignUpBodyType,
   UserType,
 } from './auth.types.ts'
@@ -94,6 +95,16 @@ const authApi = baseApi.injectEndpoints({
         }
       },
     }),
+    resetPassword: builder.mutation<void, ResetPassBOdyType>({
+      query: ({ token, password }) => {
+        console.log('reset', token)
+        return {
+          url: `v1/auth/reset-password/${token}`,
+          body: { password },
+          method: 'POST',
+        }
+      },
+    }),
   }),
 })
 
@@ -104,4 +115,5 @@ export const {
   useUpdateProfileMutation,
   useLogOutMutation,
   useRecoveryPasswordMutation,
+  useResetPasswordMutation,
 } = authApi

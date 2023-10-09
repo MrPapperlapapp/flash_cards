@@ -9,7 +9,7 @@ import s from './sign-up.module.scss'
 
 import { Card, ControlledTextField, Typography } from '@/components'
 import { Button } from '@/components/ui/button'
-import { useSignUpMutation } from '@/services/auth/auth.ts'
+import { useSignUpMutation } from '@/features/auth/model/services/auth.ts'
 
 const signUpSchema = z
   .object({

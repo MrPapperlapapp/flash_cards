@@ -9,8 +9,8 @@ import { Edit } from '@/assets/icons/drop-down/edit.tsx'
 import { Play } from '@/assets/icons/drop-down/play.tsx'
 import { Button, IconButton, Table, Typography } from '@/components'
 import { Dialog } from '@/components/ui/dialog'
-import { Deck, useDeleteDeckMutation } from '@/feature/packs/model/services'
-import { EditPackModal } from '@/feature/packs/ui/pack-edit-modal/pack-edit-modal.tsx'
+import { Deck, useDeleteDeckMutation } from '@/features/packs/model/services'
+import { EditPackModal } from '@/features/packs/ui/pack-edit-modal/pack-edit-modal.tsx'
 
 type Props = {
   pack: Deck

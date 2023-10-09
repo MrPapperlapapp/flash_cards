@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/app/store/store.ts'
-import { currentPageSelector, pageSizeSelector } from '@/feature/packs/model/selectors'
-import { packsActions } from '@/feature/packs/model/slices/packs.slice.ts'
+import { currentPageSelector, pageSizeSelector } from '@/features/packs/model/selectors'
+import { packsActions } from '@/features/packs/model/slices/packs.slice.ts'
 
 export const usePacksPagination = () => {
   const currentPage = useAppSelector(currentPageSelector)

@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { Modal } from '@/components'
 import { PackForm } from '@/components/auth/form-pack'
-import { useUpdateDeckMutation } from '@/feature/packs/model/services'
+import { useUpdateDeckMutation } from '@/features/packs/model/services'
 import s from '@/pages/pack-list/pack-list.module.scss'
 
 type Props = {

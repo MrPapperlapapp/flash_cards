@@ -4,11 +4,11 @@ import s from './pack-list.module.scss'
 
 import { Button, Modal, Pagination, Sort, Typography } from '@/components'
 import { PackForm } from '@/components/auth/form-pack'
-import { usePacksFilter } from '@/feature/packs/model/hooks/use-filter-pack.ts'
-import { usePacksPagination } from '@/feature/packs/model/hooks/use-pagination-pack.ts'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/feature/packs/model/services'
-import { FilterControls } from '@/feature/packs/ui/filter-controls/filter-controls.tsx'
-import { PacksTable } from '@/feature/packs/ui/pack-table/pack-table.tsx'
+import { usePacksFilter } from '@/features/packs/model/hooks/use-filter-pack.ts'
+import { usePacksPagination } from '@/features/packs/model/hooks/use-pagination-pack.ts'
+import { useCreateDeckMutation, useGetDecksQuery } from '@/features/packs/model/services'
+import { FilterControls } from '@/features/packs/ui/filter-controls/filter-controls.tsx'
+import { PacksTable } from '@/features/packs/ui/pack-table/pack-table.tsx'
 export const Packs = () => {
   const { currentPage, pageSize, setCurrentPage, setPageSize } = usePacksPagination()
   const { searchName, tabValue, sliderValue, setSearchName, setTabValue, setSliderValue } =

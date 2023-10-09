@@ -15,7 +15,7 @@ export type PaginationPropsType = {
   currentPage: number
   totalCount: number
   pageSize: number
-  siblingCount: number
+  siblingCount?: number
   className?: string
   onPageChange: (page: number) => void
   onPageSizeChange: (pageSize: string) => void
@@ -28,6 +28,7 @@ export const Pagination: FC<PaginationPropsType> = props => {
     siblingCount = 1,
     currentPage,
     pageSize,
+    className,
   } = props
   const DOTS = '\u2026'
   const paginationRange = usePagination({
@@ -46,7 +47,7 @@ export const Pagination: FC<PaginationPropsType> = props => {
   const rightTabIndex = disableRight ? -1 : 0
 
   const cNames = {
-    container: clsx(s.container),
+    container: clsx(s.container, className),
     pages: clsx(s.pages),
     page: clsx(s.page),
     leftArrow: clsx(s.page, disabledLeft && s.disabled),

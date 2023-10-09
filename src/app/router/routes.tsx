@@ -1,12 +1,12 @@
 import { RouteObject } from 'react-router-dom'
 
-import { Decks } from '@/pages/decks/decks.tsx'
 import { Profile } from '@/pages/profile'
 import { ProfileInfo } from '@/pages/profile/info'
 import { EditProfile } from '@/pages/profile/edit'
 import { CheckEmail, SignIn } from '@/components'
 import { SignUp } from '@/components/auth/sign-up'
 import { ForgotPassword } from '@/components/auth/forgot-password'
+import { Packs } from '@/pages/pack-list/pack-list.tsx'
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -30,7 +30,7 @@ export const publicRoutes: RouteObject[] = [
 export const privateRoutes: RouteObject[] = [
   {
     path: '/',
-    element: <Decks />,
+    element: <Packs />,
   },
   {
     path: '/profile',

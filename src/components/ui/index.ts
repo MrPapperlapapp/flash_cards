@@ -13,3 +13,4 @@ export * from './modal'
 export * from './table'
 export * from './grade'
 
+export * from './button-icon'

@@ -7,7 +7,7 @@ import { useGetMeQuery } from '@/services/auth/auth.ts'
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: <Layout/>,
     children: [
       {
         element: <PrivateRoutes />,
@@ -16,6 +16,7 @@ const routes = createBrowserRouter([
       ...publicRoutes,
     ],
   },
+
 ])
 
 export const Router = () => {

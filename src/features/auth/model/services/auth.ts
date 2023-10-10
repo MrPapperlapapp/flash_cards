@@ -1,4 +1,3 @@
-import { baseApi } from '@/services/base-api.ts'
 import {
   LogInBodyType,
   LogInResponseType,
@@ -9,6 +8,8 @@ import {
   UserType,
 } from './auth.types.ts'
 
+import { baseApi } from '@/services/base-api.ts'
+
 const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     getMe: builder.query<UserType | undefined, void>({
@@ -17,10 +18,12 @@ const authApi = baseApi.injectEndpoints({
           url: `v1/auth/me`,
           method: 'GET',
         })
+
         if (result.error) {
           // but refetch on another error
           return { data: undefined }
         }
+
         return { data: result.data as UserType }
       },
       providesTags: ['Me'],
@@ -60,9 +63,11 @@ const authApi = baseApi.injectEndpoints({
     updateProfile: builder.mutation<UserType, ProfileBodyType>({
       query: patch => {
         const formData = new FormData()
+
         patch.name && formData.append('name', patch.name)
         patch.email && formData.append('email', patch.email)
         patch.avatar && formData.append('avatar', patch.avatar)
+
         return {
           url: 'v1/auth/me',
           method: 'PATCH',
@@ -78,6 +83,7 @@ const authApi = baseApi.injectEndpoints({
             }
           })
         )
+
         try {
           await queryFulfilled
         } catch {
@@ -97,7 +103,6 @@ const authApi = baseApi.injectEndpoints({
     }),
     resetPassword: builder.mutation<void, ResetPassBOdyType>({
       query: ({ token, password }) => {
-        console.log('reset', token)
         return {
           url: `v1/auth/reset-password/${token}`,
           body: { password },

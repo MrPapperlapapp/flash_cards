@@ -1,13 +1,16 @@
-import { Button, Typography } from '@/components'
-import { Edit } from '@/assets/icons/drop-down/edit.tsx'
-import s from '../../../../../pages/profile/profile.module.scss'
 import { useNavigate } from 'react-router-dom'
+
+import s from '../../../../../pages/profile/profile.module.scss'
+
+import { Edit } from '@/assets/icons/drop-down/edit.tsx'
+import { Button, Typography } from '@/components'
 import { useGetMeQuery, useLogOutMutation } from '@/features/auth/model/services/auth.ts'
 
 export const ProfileInfo = () => {
   const { data } = useGetMeQuery()
   const [logout] = useLogOutMutation()
   const navigate = useNavigate()
+
   return (
     <>
       <div className={s.nickNameContainer}>

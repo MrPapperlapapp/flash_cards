@@ -1,9 +1,11 @@
-import { Button, ControlledTextField } from '@/components'
-import s from '../../../../../pages/profile/profile.module.scss'
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { z } from 'zod'
+
+import s from '../../../../../pages/profile/profile.module.scss'
+
+import { Button, ControlledTextField } from '@/components'
 import { useGetMeQuery, useUpdateProfileMutation } from '@/features/auth/model/services/auth.ts'
 
 const profileSchema = z.object({
@@ -27,6 +29,7 @@ export const EditProfile = () => {
     updateUserInfo({ name: getValues('nickName'), email: data!.email })
     navigate('/profile')
   }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={s.edit}>

@@ -7,6 +7,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: 'https://api.flashcards.andrii.es',
   credentials: 'include',
 })
+
 export const baseQueryWithReAuth: BaseQueryFn<
   string | FetchArgs,
   unknown,
@@ -24,6 +25,7 @@ export const baseQueryWithReAuth: BaseQueryFn<
         api,
         extraOptions
       )
+
       if (refreshResult.meta?.response?.status === 204) {
         // store the new token
 
@@ -36,5 +38,6 @@ export const baseQueryWithReAuth: BaseQueryFn<
       result = await baseQuery(args, api, extraOptions)
     }
   }
+
   return result
 }

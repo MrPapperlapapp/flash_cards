@@ -1,12 +1,14 @@
-import { Button, Card, TextField, Typography } from '@/components'
-import { Avatar } from '@/components/ui/avatar'
-import { Edit } from '@/assets/icons/drop-down/edit.tsx'
+import { ChangeEvent, useRef } from 'react'
+
+import { Label } from '@radix-ui/react-label'
+import { Outlet } from 'react-router-dom'
 
 import s from './profile.module.scss'
-import { Outlet } from 'react-router-dom'
+
+import { Edit } from '@/assets/icons/drop-down/edit.tsx'
+import { Button, Card, TextField, Typography } from '@/components'
+import { Avatar } from '@/components/ui/avatar'
 import { useGetMeQuery, useUpdateProfileMutation } from '@/features/auth/model/services/auth.ts'
-import { Label } from '@radix-ui/react-label'
-import { ChangeEvent, useRef } from 'react'
 
 export const Profile = () => {
   const { data } = useGetMeQuery()

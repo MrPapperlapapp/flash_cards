@@ -37,6 +37,7 @@ export const SignUp = () => {
       confirmPassword: '',
     },
   })
+
   if (isSuccess) return <Navigate to={'/login'} />
   const onSubmit = () =>
     signUp({

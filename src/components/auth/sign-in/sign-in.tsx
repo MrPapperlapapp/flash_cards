@@ -31,7 +31,9 @@ export const SignIn = () => {
       rememberMe: false,
     },
   })
-  if (!!me) return <Navigate to={'/'} />
+
+  if (me) return <Navigate to={'/'} />
+
   return (
     <>
       {/*{rhf dev tool}*/}

@@ -36,6 +36,7 @@ export const ForgotPassword = () => {
     })
     navigate('/check-email', { state: { email: getValues('email') } })
   }
+
   return (
     <>
       <Card className={classes}>

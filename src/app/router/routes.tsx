@@ -1,12 +1,13 @@
 import { RouteObject } from 'react-router-dom'
 
-import { Profile } from '@/pages/profile'
-import { ProfileInfo } from '../../features/auth/ui/profile/info'
 import { EditProfile } from '../../features/auth/ui/profile/edit'
+import { ProfileInfo } from '../../features/auth/ui/profile/info'
+
 import { CheckEmail, CreateNewPassword, SignIn } from '@/components'
-import { SignUp } from '@/components/auth/sign-up'
 import { ForgotPassword } from '@/components/auth/forgot-password'
+import { SignUp } from '@/components/auth/sign-up'
 import { Packs } from '@/pages/pack-list/pack-list.tsx'
+import { Profile } from '@/pages/profile'
 
 export const publicRoutes: RouteObject[] = [
   {

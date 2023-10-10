@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Navigate, useLocation, useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './create-new-password.module.scss'
@@ -17,8 +17,7 @@ const defaultValues: Form = {
 
 export const CreateNewPassword = () => {
   const { token } = useParams()
-  const location = useLocation()
-  console.log(location)
+
   const [resPass, { isSuccess }] = useResetPasswordMutation()
   const { control, handleSubmit, reset } = useForm<Form>({
     resolver: zodResolver(createNewPasswordSchema),

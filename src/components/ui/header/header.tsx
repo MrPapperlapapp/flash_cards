@@ -8,7 +8,7 @@ import { Logo } from '@/assets/logo/logo.tsx'
 import { Button, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 import { DropDown, DropDownItem, DropDownItemWithIcon } from '@/components/ui/drop-down'
-import { ProfileInfo, ProfileInfoPropsType } from '@/components/ui/header/profile-info'
+import { ProfileInfo } from '@/components/ui/header/profile-info'
 import { useGetMeQuery, useLogOutMutation } from '@/features/auth/model/services/auth.ts'
 
 export const Header = () => {

@@ -7,10 +7,7 @@ import s from './create-new-password.module.scss'
 import { createNewPasswordSchema } from './schema.ts'
 
 import { Button, Card, ControlledTextField, Typography } from '@/components'
-import {
-  useRecoveryPasswordMutation,
-  useResetPasswordMutation,
-} from '@/features/auth/model/services/auth.ts'
+import { useResetPasswordMutation } from '@/features/auth/model/services/auth.ts'
 
 type Form = z.infer<typeof createNewPasswordSchema>
 

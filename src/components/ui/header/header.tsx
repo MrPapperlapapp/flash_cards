@@ -1,5 +1,3 @@
-import { FC, memo } from 'react'
-
 import { Link, useNavigate } from 'react-router-dom'
 
 import s from './header.module.scss'
@@ -11,13 +9,11 @@ import { Button, Typography } from '@/components/ui'
 import { Avatar } from '@/components/ui/avatar'
 import { DropDown, DropDownItem, DropDownItemWithIcon } from '@/components/ui/drop-down'
 import { ProfileInfo, ProfileInfoPropsType } from '@/components/ui/header/profile-info'
+import { useGetMeQuery, useLogOutMutation } from '@/features/auth/model/services/auth.ts'
 
-type Props = {
-  data: ProfileInfoPropsType | undefined
-  logout: () => void
-}
-
-export const Header: FC<Props> = memo(({ data, logout }) => {
+export const Header = () => {
+  const { data } = useGetMeQuery()
+  const [logout] = useLogOutMutation()
   const navigate = useNavigate()
 
   const toProfile = () => {
@@ -57,4 +53,4 @@ export const Header: FC<Props> = memo(({ data, logout }) => {
       </div>
     </div>
   )
-})
+}

@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './forgot-password.module.scss'
@@ -17,25 +17,26 @@ const signUpSchema = z.object({
 export type SignUpFormProps = z.infer<typeof signUpSchema>
 
 export const ForgotPassword = () => {
-  const [passRecovery] = useRecoveryPasswordMutation()
-  const navigate = useNavigate()
+  const [passRecovery, { isSuccess }] = useRecoveryPasswordMutation()
   const classes = clsx(s.card)
 
-  const { control, handleSubmit, getValues } = useForm<SignUpFormProps>({
+  const { control, handleSubmit, getValues, setError } = useForm<SignUpFormProps>({
     mode: 'onSubmit',
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: '',
     },
   })
-  const onSubmit = () => {
+  const onSubmit = () =>
     passRecovery({
       html: `"<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/recover-password/##token##">here</a> to recover your password</p>"`,
       email: getValues('email'),
       subject: 'Recovery Password',
     })
-    navigate('/check-email', { state: { email: getValues('email') } })
-  }
+      .unwrap()
+      .catch(() => setError('email', { message: 'Email not found' }))
+
+  if (isSuccess) return <Navigate to={'/check-email'} state={{ email: getValues('email') }} />
 
   return (
     <>

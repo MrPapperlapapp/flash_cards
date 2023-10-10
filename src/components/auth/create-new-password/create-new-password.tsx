@@ -1,13 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useLocation, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './create-new-password.module.scss'
 import { createNewPasswordSchema } from './schema.ts'
 
 import { Button, Card, ControlledTextField, Typography } from '@/components'
-import { useResetPasswordMutation } from '@/features/auth/model/services/auth.ts'
+import {
+  useRecoveryPasswordMutation,
+  useResetPasswordMutation,
+} from '@/features/auth/model/services/auth.ts'
 
 type Form = z.infer<typeof createNewPasswordSchema>
 
@@ -17,7 +20,8 @@ const defaultValues: Form = {
 
 export const CreateNewPassword = () => {
   const { token } = useParams()
-
+  const location = useLocation()
+  console.log(location)
   const [resPass, { isSuccess }] = useResetPasswordMutation()
   const { control, handleSubmit, reset } = useForm<Form>({
     resolver: zodResolver(createNewPasswordSchema),

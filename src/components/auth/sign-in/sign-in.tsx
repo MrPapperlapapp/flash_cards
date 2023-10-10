@@ -1,4 +1,3 @@
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate } from 'react-router-dom'
@@ -10,6 +9,7 @@ import { Button, ControlledTextField, Typography } from '@/components'
 import { Card } from '@/components/ui/card'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox'
 import { useGetMeQuery, useLogInMutation } from '@/features/auth/model/services/auth.ts'
+import { LogInBodyType } from '@/features/auth/model/services/auth.types.ts'
 
 const signInSchema = z.object({
   email: z.string().email('Invalid email address').nonempty('Enter email'),
@@ -22,7 +22,7 @@ type SignInFormProps = z.infer<typeof signInSchema>
 export const SignIn = () => {
   const { data: me } = useGetMeQuery()
   const [login] = useLogInMutation()
-  const { handleSubmit, control } = useForm<SignInFormProps>({
+  const { handleSubmit, control, setError } = useForm<SignInFormProps>({
     mode: 'onSubmit',
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -31,19 +31,20 @@ export const SignIn = () => {
       rememberMe: false,
     },
   })
+  const logInHandler = (props: LogInBodyType) =>
+    login({ ...props })
+      .unwrap()
+      .catch(() => setError('email', { message: 'Invalid login or password' }))
 
   if (me) return <Navigate to={'/'} />
 
   return (
     <>
-      {/*{rhf dev tool}*/}
-      <DevTool control={control} />
-      {/*{rhf dev tool}*/}
       <Card className={s.card}>
         <Typography variant={'large'} className={s.title}>
           Sign In
         </Typography>
-        <form onSubmit={handleSubmit(login)}>
+        <form onSubmit={handleSubmit(logInHandler)}>
           <div className={s.textField}>
             <ControlledTextField
               placeholder={'Email'}
@@ -73,7 +74,7 @@ export const SignIn = () => {
           >
             Forgot Password?
           </Typography>
-          <Button type="submit" fullWidth className={s.button}>
+          <Button fullWidth className={s.button}>
             Sign In
           </Button>
         </form>

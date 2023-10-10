@@ -24,6 +24,5 @@ export const Router = () => {
 function PrivateRoutes() {
   const { data: me } = useGetMeQuery()
   const isAuthenticated = !!me
-
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }

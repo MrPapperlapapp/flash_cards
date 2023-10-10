@@ -11,6 +11,8 @@ import { Button, IconButton, Table, Typography } from '@/components'
 import { Dialog } from '@/components/ui/dialog'
 import { Deck, useDeleteDeckMutation } from '@/features/packs/model/services'
 import { EditPackModal } from '@/features/packs/ui/pack-edit-modal/pack-edit-modal.tsx'
+import {useAppDispatch} from "@/app/store/store.ts";
+import {cardsSlice} from "@/features/cards/model/card-slice.ts";
 
 type Props = {
   pack: Deck
@@ -18,6 +20,7 @@ type Props = {
 }
 
 export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
+  const dispatch = useAppDispatch()
   const isMyPack = authUserId === pack.author.id
   // const isMyPack = true
 
@@ -35,6 +38,10 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
 
   const onLearn = () => {
     navigate(`${pack.id}/learn`)
+  }
+
+  const setPackName = () => {
+    dispatch(cardsSlice.actions.setPackName({packName: pack.name}))
   }
 
   return (
@@ -60,7 +67,7 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
 
       <Table.Row key={pack.id}>
         <Table.Cell>
-          <Button as={Link} to={pack.id} variant="link" className={s.link}>
+          <Button as={Link} to={pack.id} variant="link" className={s.link} onClick={setPackName}>
             {pack.cover && <img src={pack.cover} alt="Pack cover" className={s.cover} />}
             <Typography as="h3" variant="body2">
               {pack.name}

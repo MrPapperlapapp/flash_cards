@@ -1,10 +1,9 @@
 import {useGetCardsQuery} from "@/features/cards/model";
-import {useState} from "react";
 import {cardsSelectors} from "@/features/cards/model/card-selectors.ts";
 import {useSelector} from "react-redux";
 import {Link, useParams} from "react-router-dom";
 import {CardsTable} from "@/features/cards/ui/cards-table.tsx";
-import {Button, Pagination, TextField} from "@/components";
+import {Button, Pagination, TextField, Typography} from "@/components";
 import ArrowBackOutline from "@/assets/icons/arrowBackOutline.tsx";
 import s from "@/pages/pack-list/pack-list.module.scss";
 import {cardsSlice} from "@/features/cards/model/card-slice.ts";
@@ -17,6 +16,8 @@ export const Cards = () => {
     const currentPage = useSelector(cardsSelectors.selectCurrentPage)
     const itemsPerPage = useSelector(cardsSelectors.selectItemsPerPage)
     const orderBy = useSelector(cardsSelectors.selectOrderBy)
+    const searchValue = useSelector(cardsSelectors.selectSearchByQuestion)
+    const packName = useSelector(cardsSelectors.selectPackName)
 
     const dispatch = useAppDispatch()
     const setCurrentPage = (currentPage: number) =>
@@ -25,8 +26,14 @@ export const Cards = () => {
     const setItemsPerPage = (itemsPerPage: number) =>
         dispatch(cardsSlice.actions.setItemsPerPage({perPage: itemsPerPage}))
 
+    const setSearchValue = (searchValue: string) =>
+        dispatch(cardsSlice.actions.setSearchByQuestion({question: searchValue}))
+
+    const resetCardsData = () => {
+      dispatch(cardsSlice.actions.resetCardsData())
+    }
+
     const { cardId } = useParams()
-    const [searchValue, setSearchValue] = useState('')
 
 
     const { cards, totalItems, isLoading, isFetching } = useGetCardsQuery(
@@ -44,12 +51,15 @@ export const Cards = () => {
     )
     return(
         <div>
-            <Button variant={'link'} as={Link} to={'/'}>
+            <Button variant={'link'} as={Link} to={'/'} onClick={resetCardsData}>
                 <>
                     <ArrowBackOutline />
                     Back to Packs List
                 </>
             </Button>
+            <div>
+                <Typography variant="large">{packName}</Typography>
+            </div>
             <TextField
                 value={searchValue}
                 onChange={e => {

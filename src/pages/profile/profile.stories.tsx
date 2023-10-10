@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { BrowserRouter } from 'react-router-dom'
 
-import { Profile } from '@/components/profile/profile.tsx'
+import { Profile } from '@/pages/profile/profile.tsx'
 
 const meta = {
   title: 'profile/Profile',
@@ -22,11 +23,13 @@ type Story = StoryObj<typeof meta>
 
 export const ProfilePage: Story = {
   args: {
-    avatarImg:
-      'https://t4.ftcdn.net/jpg/02/85/46/81/240_F_285468179_nY3iZePEB0ymN6s7LjI1lK9o90VwS6m5.jpg',
-    title: 'Profile',
-    email: 'a@a.com',
-    name: 'Gustov',
+    onSubmit: () => {},
   },
-  render: args => <Profile {...args} />,
+  render: args => {
+    return (
+      <BrowserRouter>
+        <Profile {...args} />
+      </BrowserRouter>
+    )
+  },
 }

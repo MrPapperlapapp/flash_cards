@@ -1,33 +1,35 @@
-import { FC } from 'react'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Navigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './create-new-password.module.scss'
 import { createNewPasswordSchema } from './schema.ts'
 
 import { Button, Card, ControlledTextField, Typography } from '@/components'
+import { useResetPasswordMutation } from '@/features/auth/model/services/auth.ts'
 
-type PropsType = {
-  onSubmit: (data: Form) => void
-}
 type Form = z.infer<typeof createNewPasswordSchema>
 
 const defaultValues: Form = {
   newPassword: '',
 }
 
-export const CreateNewPassword: FC<PropsType> = ({ onSubmit }) => {
+export const CreateNewPassword = () => {
+  const { token } = useParams()
+
+  const [resPass, { isSuccess }] = useResetPasswordMutation()
   const { control, handleSubmit, reset } = useForm<Form>({
     resolver: zodResolver(createNewPasswordSchema),
     mode: 'onSubmit',
     defaultValues,
   })
   const onSubmitForm = handleSubmit(data => {
-    onSubmit({ newPassword: data.newPassword })
+    token && data.newPassword && resPass({ token, password: data.newPassword })
     reset(defaultValues)
   })
+
+  if (isSuccess) return <Navigate to={'/login'} />
 
   return (
     <Card className={s.card}>

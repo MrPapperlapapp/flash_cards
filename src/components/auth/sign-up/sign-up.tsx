@@ -2,13 +2,14 @@ import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
-import { BrowserRouter, Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './sign-up.module.scss'
 
 import { Card, ControlledTextField, Typography } from '@/components'
 import { Button } from '@/components/ui/button'
+import { useSignUpMutation } from '@/features/auth/model/services/auth.ts'
 
 const signUpSchema = z
   .object({
@@ -23,15 +24,11 @@ const signUpSchema = z
 
 export type SignUpFormProps = z.infer<typeof signUpSchema>
 
-type Props = {
-  onSubmit: (data: SignUpFormProps) => void
-  className?: string
-}
+export const SignUp = () => {
+  const [signUp, { isSuccess }] = useSignUpMutation()
 
-export const SignUp = ({ onSubmit, className }: Props) => {
-  const classes = clsx(s.card, className)
-
-  const { control, handleSubmit } = useForm<SignUpFormProps>({
+  const classes = clsx(s.card)
+  const { control, handleSubmit, getValues } = useForm<SignUpFormProps>({
     mode: 'onSubmit',
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -40,6 +37,14 @@ export const SignUp = ({ onSubmit, className }: Props) => {
       confirmPassword: '',
     },
   })
+
+  if (isSuccess) return <Navigate to={'/login'} />
+  const onSubmit = () =>
+    signUp({
+      html: `<b>Hello, ##name##!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://localhost:3000/confirm-email/##token##">Confirm email</a>. If it doesn't work, copy and paste the following link in your browser:<br/>http://localhost:3000/confirm-email/##token##`,
+      email: getValues('email'),
+      password: getValues('password'),
+    })
 
   return (
     <>
@@ -78,11 +83,9 @@ export const SignUp = ({ onSubmit, className }: Props) => {
         <Typography variant="body2" className={s.caption}>
           Already have an account?
         </Typography>
-        <BrowserRouter>
-          <Typography variant="link1" as={Link} to="/sign-in" className={s.signInLink}>
-            Sign In
-          </Typography>
-        </BrowserRouter>
+        <Typography variant="link1" as={Link} to="/sign-in" className={s.signInLink}>
+          Sign In
+        </Typography>
       </Card>
     </>
   )

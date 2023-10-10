@@ -1,9 +1,7 @@
-import { FC } from 'react'
-
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { BrowserRouter, Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './sign-in.module.scss'
@@ -11,6 +9,7 @@ import s from './sign-in.module.scss'
 import { Button, ControlledTextField, Typography } from '@/components'
 import { Card } from '@/components/ui/card'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox'
+import { useGetMeQuery, useLogInMutation } from '@/features/auth/model/services/auth.ts'
 
 const signInSchema = z.object({
   email: z.string().email('Invalid email address').nonempty('Enter email'),
@@ -19,11 +18,10 @@ const signInSchema = z.object({
 })
 
 type SignInFormProps = z.infer<typeof signInSchema>
-type Props = {
-  onSubmit: (data: SignInFormProps) => void
-}
 
-export const SignIn: FC<Props> = ({ onSubmit }) => {
+export const SignIn = () => {
+  const { data: me } = useGetMeQuery()
+  const [login] = useLogInMutation()
   const { handleSubmit, control } = useForm<SignInFormProps>({
     mode: 'onSubmit',
     resolver: zodResolver(signInSchema),
@@ -34,6 +32,8 @@ export const SignIn: FC<Props> = ({ onSubmit }) => {
     },
   })
 
+  if (me) return <Navigate to={'/'} />
+
   return (
     <>
       {/*{rhf dev tool}*/}
@@ -43,7 +43,7 @@ export const SignIn: FC<Props> = ({ onSubmit }) => {
         <Typography variant={'large'} className={s.title}>
           Sign In
         </Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(login)}>
           <div className={s.textField}>
             <ControlledTextField
               placeholder={'Email'}
@@ -65,16 +65,14 @@ export const SignIn: FC<Props> = ({ onSubmit }) => {
             name={'rememberMe'}
             label={'Remember me'}
           />
-          <BrowserRouter>
-            <Typography
-              variant={'body2'}
-              as={Link}
-              to="/recover-password"
-              className={s.recoverPasswordLink}
-            >
-              Forgot Password?
-            </Typography>
-          </BrowserRouter>
+          <Typography
+            variant={'body2'}
+            as={Link}
+            to="/recover-password"
+            className={s.recoverPasswordLink}
+          >
+            Forgot Password?
+          </Typography>
           <Button type="submit" fullWidth className={s.button}>
             Sign In
           </Button>
@@ -83,11 +81,9 @@ export const SignIn: FC<Props> = ({ onSubmit }) => {
           {/* eslint-disable-next-line react/no-unescaped-entities */}
           Don't have an account?
         </Typography>
-        <BrowserRouter>
-          <Typography variant="link1" as={Link} to="/sign-up" className={s.signUpLink}>
-            Sign Up
-          </Typography>
-        </BrowserRouter>
+        <Typography variant="link1" as={Link} to="/sign-up" className={s.signUpLink}>
+          Sign Up
+        </Typography>
       </Card>
     </>
   )

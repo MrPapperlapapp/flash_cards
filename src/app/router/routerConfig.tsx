@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-rou
 
 import { privateRoutes, publicRoutes } from '@/app/router/routes.tsx'
 import { Layout } from '@/components/layout'
+import { useGetMeQuery } from '@/features/auth/model/services/auth.ts'
 
 const routes = createBrowserRouter([
   {
@@ -21,7 +22,8 @@ export const Router = () => {
   return <RouterProvider router={routes} />
 }
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { data: me } = useGetMeQuery()
+  const isAuthenticated = !!me
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }

@@ -13,6 +13,8 @@
   right: 0;
   left: 0;
 
+  /* Radix Fix for fixed position */
+  width: calc(100% - var(--removed-body-scroll-bar-size, 0px));
   height: 60px;
 
   background-color: var(--color-dark-700);

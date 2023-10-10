@@ -21,13 +21,6 @@ export const cardsSlice = createSlice({
     setOrderBy: (state, action: PayloadAction<{ orderBy: string }>) => {
       state.orderBy = action.payload.orderBy
     },
-    resetCardsData: (state) => {
-      const initial = cardsSlice.getInitialState()
-      state.orderBy = initial.orderBy
-      state.currentPage = initial.currentPage
-      state.itemsPerPage = initial.itemsPerPage
-      state.searchByQuestion = initial.searchByQuestion
-    },
   },
 })
 

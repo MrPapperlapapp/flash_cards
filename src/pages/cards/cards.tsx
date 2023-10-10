@@ -3,7 +3,7 @@ import {cardsSelectors} from "@/features/cards/model/card-selectors.ts";
 import {useSelector} from "react-redux";
 import {Link, useParams} from "react-router-dom";
 import {CardsTable} from "@/features/cards/ui/cards-table.tsx";
-import {Button, Pagination, TextField, Typography} from "@/components";
+import {Button, Modal, Pagination, TextField, Typography} from "@/components";
 import ArrowBackOutline from "@/assets/icons/arrowBackOutline.tsx";
 import s from "@/pages/pack-list/pack-list.module.scss";
 import {cardsSlice} from "@/features/cards/model/card-slice.ts";
@@ -14,11 +14,13 @@ import {DropDown, DropDownItemWithIcon} from "@/components/ui/drop-down";
 import {Play} from "@/assets/icons/drop-down/play.tsx";
 import {Edit} from "@/assets/icons/drop-down/edit.tsx";
 import {Delete} from "@/assets/icons/drop-down/delete.tsx";
+import {useEffect, useState} from "react";
+import {CreateNewCard, FormTypeAddCard} from "@/features/cards/ui/create-card-form/create-card-form.tsx";
 
 
 export const Cards = () => {
 
-
+    const [addNewCardOpen, setAddNewCardOpen] = useState(false)
     const currentPage = useSelector(cardsSelectors.selectCurrentPage)
     const itemsPerPage = useSelector(cardsSelectors.selectItemsPerPage)
     const orderBy = useSelector(cardsSelectors.selectOrderBy)
@@ -34,9 +36,9 @@ export const Cards = () => {
     const setSearchValue = (searchValue: string) =>
         dispatch(cardsSlice.actions.setSearchByQuestion({question: searchValue}))
 
-    const resetCardsData = () => {
-      dispatch(cardsSlice.actions.resetCardsData())
-    }
+    useEffect(()=> {
+        setSearchValue('')
+    },[])
 
     const { cardId } = useParams()
 
@@ -71,21 +73,39 @@ export const Cards = () => {
     const {data} = useGetMeQuery()
     const isMyPack = data?.id === authorId
 
+    const createCardHandler = (data:FormTypeAddCard) => {
+        console.log(data)
+        setAddNewCardOpen(false)
+    }
+
     return(
         <div>
-            <Button variant={'link'} as={Link} to={'/'} onClick={resetCardsData}>
+            <Modal
+                isOpen={addNewCardOpen}
+                showCloseButton={addNewCardOpen}
+                onClose={() => setAddNewCardOpen(false)}
+                className={s.modal}
+                title={'Add new card'}
+            >
+                <CreateNewCard onSubmit={createCardHandler}/>
+            </Modal>
+            <Button variant={'link'} as={Link} to={'/'}>
                 <>
                     <ArrowBackOutline />
                     Back to Packs List
                 </>
             </Button>
             <div>
-                <Typography variant="large">{packName}</Typography>
-                {isMyPack && <DropDown>
-                    <DropDownItemWithIcon icon={<Play />} text="Learn"/>
-                    <DropDownItemWithIcon icon={<Edit />} text="Edit" />
-                    <DropDownItemWithIcon icon={<Delete />} text="Delete" />
-                </DropDown> }
+                <div>
+                    <Typography variant="large">{packName}</Typography>
+                    {isMyPack && <DropDown>
+                        <DropDownItemWithIcon icon={<Play/>} text="Learn"/>
+                        <DropDownItemWithIcon icon={<Edit/>} text="Edit"/>
+                        <DropDownItemWithIcon icon={<Delete/>} text="Delete"/>
+                    </DropDown>}
+                </div>
+                {isMyPack ? <Button onClick={()=>setAddNewCardOpen(true)}>Add New Card</Button>
+                : <Button>Learn to Pack</Button>}
             </div>
             <TextField
                 value={searchValue}

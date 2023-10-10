@@ -5,5 +5,4 @@ export const cardsSelectors = {
   selectItemsPerPage: (state: RootState) => state.cards.itemsPerPage,
   selectSearchByQuestion: (state: RootState) => state.cards.searchByQuestion,
   selectOrderBy: (state: RootState) => state.cards.orderBy,
-  selectPackName: (state:RootState) => state.cards.packName
 }

@@ -5,7 +5,9 @@ import s from './card-table.module.scss'
 import {Column, Table, TableHeaderProps} from '@/components/ui/table'
 import {Card} from "@/features/cards/model";
 import {Grade} from "@/components";
-const columns: Column[] = [
+import {Edit} from "@/assets/icons/drop-down/edit.tsx";
+import {Delete} from "@/assets/icons/drop-down/delete.tsx";
+const columnsMy: Column[] = [
     {
         key: 'question',
         title: 'Question',
@@ -31,18 +33,41 @@ const columns: Column[] = [
     },
 ]
 
+const columns: Column[] = [
+    {
+        key: 'question',
+        title: 'Question',
+        sortable: true,
+    },
+    {
+        key: 'answer',
+        title: 'Answer',
+        sortable: true,
+    },
+    {
+        key: 'updated',
+        title: 'Last Updated',
+        sortable: true,
+    },
+    {
+        key: 'grade',
+        title: 'Grade',
+    },
+]
+
 type Props = {
     items?: Card[]
+    isMyPack: boolean
 } & Pick<TableHeaderProps, 'sort' | 'onSort'>
 
-export const CardsTable: FC<Props> = memo(({ items, ...rest }) => {
+export const CardsTable: FC<Props> = memo(({ items, isMyPack, ...rest }) => {
     if (!items?.length) {
         return <div className={s.empty}>Can't find any cards</div>
     }
 
     return (
         <Table.Root className={s.container}>
-            <Table.Header columns={columns} {...rest} />
+            <Table.Header columns={isMyPack ? columnsMy : columns} {...rest} />
             <Table.Body>
                 {items.map(card => (
 
@@ -60,6 +85,10 @@ export const CardsTable: FC<Props> = memo(({ items, ...rest }) => {
                             {/*TODO on click*/}
                             <Grade value={card.grade}  onClick={()=>{}} />
                         </Table.Cell>
+                        {isMyPack && <Table.Cell>
+                            <Edit/>
+                            <Delete/>
+                        </Table.Cell>}
                     </Table.Row>
                 ))}
             </Table.Body>

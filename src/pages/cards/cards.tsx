@@ -8,6 +8,12 @@ import ArrowBackOutline from "@/assets/icons/arrowBackOutline.tsx";
 import s from "@/pages/pack-list/pack-list.module.scss";
 import {cardsSlice} from "@/features/cards/model/card-slice.ts";
 import {useAppDispatch} from "@/app/store/store.ts";
+import {useGetMeQuery} from "@/features/auth/model/services/auth.ts";
+import {useGetDeckInfoQuery} from "@/features/packs/model/services";
+import {DropDown, DropDownItemWithIcon} from "@/components/ui/drop-down";
+import {Play} from "@/assets/icons/drop-down/play.tsx";
+import {Edit} from "@/assets/icons/drop-down/edit.tsx";
+import {Delete} from "@/assets/icons/drop-down/delete.tsx";
 
 
 export const Cards = () => {
@@ -17,7 +23,6 @@ export const Cards = () => {
     const itemsPerPage = useSelector(cardsSelectors.selectItemsPerPage)
     const orderBy = useSelector(cardsSelectors.selectOrderBy)
     const searchValue = useSelector(cardsSelectors.selectSearchByQuestion)
-    const packName = useSelector(cardsSelectors.selectPackName)
 
     const dispatch = useAppDispatch()
     const setCurrentPage = (currentPage: number) =>
@@ -49,6 +54,23 @@ export const Cards = () => {
             },
         }
     )
+    const { authorId, packName, isLoadingDeckInfo, isFetchingDeckInfo } = useGetDeckInfoQuery(
+        { id: cardId ?? "0"},
+        {
+            selectFromResult: ({ data, isLoading:isLoadingDeckInfo, isFetching:isFetchingDeckInfo }) => {
+                return {
+                    authorId: data?.userId,
+                    packName: data?.name,
+                    isLoadingDeckInfo,
+                    isFetchingDeckInfo,
+                }
+            },
+        }
+    )
+
+    const {data} = useGetMeQuery()
+    const isMyPack = data?.id === authorId
+
     return(
         <div>
             <Button variant={'link'} as={Link} to={'/'} onClick={resetCardsData}>
@@ -59,6 +81,11 @@ export const Cards = () => {
             </Button>
             <div>
                 <Typography variant="large">{packName}</Typography>
+                {isMyPack && <DropDown>
+                    <DropDownItemWithIcon icon={<Play />} text="Learn"/>
+                    <DropDownItemWithIcon icon={<Edit />} text="Edit" />
+                    <DropDownItemWithIcon icon={<Delete />} text="Delete" />
+                </DropDown> }
             </div>
             <TextField
                 value={searchValue}
@@ -69,6 +96,7 @@ export const Cards = () => {
             />
             <CardsTable
                 items={cards}
+                isMyPack={isMyPack}
             />
             <Pagination
                 className={s.pagination}

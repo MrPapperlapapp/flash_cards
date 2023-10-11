@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import {FC, memo} from 'react'
 
 import s from './card-table.module.scss'
 
@@ -7,6 +7,7 @@ import {Card} from "@/features/cards/model";
 import {Grade} from "@/components";
 import {Edit} from "@/assets/icons/drop-down/edit.tsx";
 import {Delete} from "@/assets/icons/drop-down/delete.tsx";
+
 const columnsMy: Column[] = [
     {
         key: 'question',
@@ -58,11 +59,18 @@ const columns: Column[] = [
 type Props = {
     items?: Card[]
     isMyPack: boolean
+    onClickDelete: (open: boolean) => void
+    setDeleteCardId: (id: string) => void
 } & Pick<TableHeaderProps, 'sort' | 'onSort'>
 
-export const CardsTable: FC<Props> = memo(({ items, isMyPack, ...rest }) => {
+export const CardsTable: FC<Props> = memo(({items, isMyPack, onClickDelete, setDeleteCardId, ...rest}) => {
     if (!items?.length) {
         return <div className={s.empty}>Can't find any cards</div>
+    }
+
+    const deleteHandler = (id: string) => {
+        setDeleteCardId(id)
+        onClickDelete(true)
     }
 
     return (
@@ -73,21 +81,29 @@ export const CardsTable: FC<Props> = memo(({ items, isMyPack, ...rest }) => {
 
                     <Table.Row key={card.id}>
                         <Table.Cell>
-                            {card.question}
+                            <div className={s.cellWithImage}>
+                                {card.questionImg &&
+                                    <img src={card.questionImg} alt="question image" className={s.cover}/>}
+                                {card.question}
+                            </div>
                         </Table.Cell>
                         <Table.Cell>
-                            {card.answer}
+                            <div className={s.cellWithImage}>
+                                {card.answerImg && <img src={card.answerImg} alt="answer image" className={s.cover}/>}
+                                {card.answer}
+                            </div>
                         </Table.Cell>
                         <Table.Cell>
                             {new Date(card.updated).toLocaleDateString()}
                         </Table.Cell>
                         <Table.Cell>
                             {/*TODO on click*/}
-                            <Grade value={card.grade}  onClick={()=>{}} />
+                            <Grade value={card.grade} onClick={() => {
+                            }}/>
                         </Table.Cell>
                         {isMyPack && <Table.Cell>
-                            <Edit/>
-                            <Delete/>
+                            <Edit className={s.icon}/>
+                            <Delete className={s.icon} onClick={() => deleteHandler(card.id)}/>
                         </Table.Cell>}
                     </Table.Row>
                 ))}

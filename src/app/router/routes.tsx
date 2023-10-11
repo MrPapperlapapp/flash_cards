@@ -39,7 +39,7 @@ export const privateRoutes: RouteObject[] = [
     element: <Packs />,
   },
   {
-    path: '/:cardId',
+    path: '/:packId',
     element: <Cards />,
   },
   {

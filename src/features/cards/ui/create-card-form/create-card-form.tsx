@@ -8,36 +8,50 @@ import {Upload} from "@/assets/icons/upload/upload.tsx";
 import s from "./create-card-form.module.scss"
 import noCover from "@/assets/icons/upload/no-cover.svg";
 import {useState} from "react";
+import {useCreateCardMutation} from "@/features/cards/model";
 
 const schemaAddCard = z.object({
     question: z.string().min(3).max(30),
     answer: z.string().min(3).max(30),
-    questionImg: z.any(),
-    answerImg: z.any(),
+    questionImg: z.instanceof(File)
+        .refine(file => file.size <= 1000000, `Max image size is 1MB.`)
+        .refine(
+            file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type),
+            'Only .jpg, .jpeg, .png and .webp formats are supported.'
+        )
+        .optional(),
+    answerImg: z.instanceof(File)
+        .refine(file => file.size <= 1000000, `Max image size is 1MB.`)
+        .refine(
+            file => ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type),
+            'Only .jpg, .jpeg, .png and .webp formats are supported.'
+        )
+        .optional(),
 })
 
 export type FormTypeAddCard = z.infer<typeof schemaAddCard>
 
 type Props = {
-    onSubmit: (data: FormTypeAddCard) => void
+    onSubmit: () => void
+    id: string
     onCancel: () => void
 }
 
-export const CreateNewCard = ({onSubmit, onCancel}: Props) => {
-    const [downloaded, setDownloaded] = useState<string>('')
+export const CreateNewCard = ({id, onCancel, onSubmit}: Props) => {
+    const [downloadedQuestionImg, setDownloadedQuestionImg] = useState<string>('')
+    const [downloadedAnswerImg, setDownloadedAnswerImg] = useState<string>('')
 
-    const [imgError, setImgError] = useState('')
-    const {control, handleSubmit, watch, trigger, getFieldState, resetField} = useForm<FormTypeAddCard>({
+    const [questionImgError, setQuestionImgError] = useState('')
+    const [answerImgError, setAnswerImgError] = useState('')
+    const {control, handleSubmit, getValues, watch, trigger, getFieldState, resetField} = useForm<FormTypeAddCard>({
         mode: 'onSubmit',
         resolver: zodResolver(schemaAddCard),
         defaultValues: {
             question: '',
             answer: '',
-            questionImg: '',
-            answerImg: '',
         },
     })
-    const extraActions = async () => {
+    const extraActionsQuestionImg = async () => {
         const success = await trigger('questionImg')
 
         const {error} = getFieldState('questionImg')
@@ -45,7 +59,7 @@ export const CreateNewCard = ({onSubmit, onCancel}: Props) => {
         const file = watch('questionImg')
 
         if (!success && error?.message) {
-            setImgError(error.message)
+            setQuestionImgError(error.message)
 
             resetField('questionImg')
         }
@@ -54,40 +68,87 @@ export const CreateNewCard = ({onSubmit, onCancel}: Props) => {
 
             const img = success ? URL.createObjectURL(file) : ''
 
-            setDownloaded(img)
+            setDownloadedQuestionImg(img)
 
-            if (imgError) setImgError('')
+            if (questionImgError) setQuestionImgError('')
         }
     }
 
-    const handleFormSubmitted = handleSubmit(onSubmit)
+    const extraActionsAnswerImg = async () => {
+        const success = await trigger('answerImg')
+
+        const {error} = getFieldState('answerImg')
+
+        const file = watch('answerImg')
+
+        if (!success && error?.message) {
+            setQuestionImgError(error.message)
+
+            resetField('answerImg')
+        }
+
+        if (file) {
+
+            const img = success ? URL.createObjectURL(file) : ''
+
+            setDownloadedAnswerImg(img)
+
+            if (answerImgError) setAnswerImgError('')
+        }
+    }
+
+    const [createCard] = useCreateCardMutation()
+    const handleFormSubmitted = (data: FormTypeAddCard) => {
+        const form = new FormData()
+
+        form.append('question', getValues().question)
+        form.append('answer', getValues().answer)
+        data.questionImg && form.append('questionImg', data.questionImg)
+        data.answerImg && form.append('answerImg', data.answerImg)
+
+        createCard({id, form})
+        onSubmit()
+    }
 
     return (
         <>
             {/*<DevTool control={control} />*/}
             <Card>
-                <Typography variant="large">
-                    Add New Card
-                </Typography>
-                <form onSubmit={handleFormSubmitted}>
+                <form onSubmit={handleSubmit(handleFormSubmitted)}>
                     <div>
                         <ControlledTextField label={'question'} name={'question'} control={control}/>
                         <ControlledTextField label={'answer'} name={'answer'} control={control}/>
-                        <img src={downloaded || noCover} alt={'img'} className={s.image} />
-                        {imgError && (
+                        <img src={downloadedQuestionImg || noCover} alt={'img'} className={s.image}/>
+                        {questionImgError && (
                             <Typography variant="caption" className={s.error}>
-                                {imgError}
+                                {questionImgError}
                             </Typography>
                         )}
                         <ControlledFileUploader
                             control={control}
                             name="questionImg"
                             variant="secondary"
-                            extraActions={extraActions}
+                            extraActions={extraActionsQuestionImg}
                             fullWidth
                         >
                             <Upload className={s.imgIcon}/>
                             Image Question
+                        </ControlledFileUploader>
+                        <img src={downloadedAnswerImg || noCover} alt={'img'} className={s.image}/>
+                        {questionImgError && (
+                            <Typography variant="caption" className={s.error}>
+                                {answerImgError}
+                            </Typography>
+                        )}
+                        <ControlledFileUploader
+                            control={control}
+                            name="answerImg"
+                            variant="secondary"
+                            extraActions={extraActionsAnswerImg}
+                            fullWidth
+                        >
+                            <Upload className={s.imgIcon}/>
+                            Image Answer
                         </ControlledFileUploader>
                     </div>
                     <Button variant={"secondary"} onClick={onCancel}>

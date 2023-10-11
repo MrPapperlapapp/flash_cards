@@ -15,12 +15,15 @@ import {Play} from "@/assets/icons/drop-down/play.tsx";
 import {Edit} from "@/assets/icons/drop-down/edit.tsx";
 import {Delete} from "@/assets/icons/drop-down/delete.tsx";
 import {useEffect, useState} from "react";
-import {CreateNewCard, FormTypeAddCard} from "@/features/cards/ui/create-card-form/create-card-form.tsx";
+import {CreateNewCard} from "@/features/cards/ui/create-card-form/create-card-form.tsx";
+import {DeleteCard} from "@/features/cards/ui/delete-card-form/delete-card-form.tsx";
 
 
 export const Cards = () => {
 
     const [addNewCardOpen, setAddNewCardOpen] = useState(false)
+    const [deleteCardOpen, setDeleteCardOpen] = useState(false)
+    const [deleteCardId, setDeleteCardId] = useState('')
     const currentPage = useSelector(cardsSelectors.selectCurrentPage)
     const itemsPerPage = useSelector(cardsSelectors.selectItemsPerPage)
     const orderBy = useSelector(cardsSelectors.selectOrderBy)
@@ -40,11 +43,11 @@ export const Cards = () => {
         setSearchValue('')
     },[])
 
-    const { cardId } = useParams()
+    const { packId } = useParams()
 
 
     const { cards, totalItems, isLoading, isFetching } = useGetCardsQuery(
-        { id: cardId, question: searchValue, currentPage, itemsPerPage, orderBy },
+        { id: packId, question: searchValue, currentPage, itemsPerPage, orderBy },
         {
             selectFromResult: ({ data, isLoading, isFetching }) => {
                 return {
@@ -57,7 +60,7 @@ export const Cards = () => {
         }
     )
     const { authorId, packName, isLoadingDeckInfo, isFetchingDeckInfo } = useGetDeckInfoQuery(
-        { id: cardId ?? "0"},
+        { id: packId ?? "0"},
         {
             selectFromResult: ({ data, isLoading:isLoadingDeckInfo, isFetching:isFetchingDeckInfo }) => {
                 return {
@@ -73,13 +76,11 @@ export const Cards = () => {
     const {data} = useGetMeQuery()
     const isMyPack = data?.id === authorId
 
-    const createCardHandler = (data:FormTypeAddCard) => {
-        console.log(data)
-        setAddNewCardOpen(false)
-    }
+
 
     return(
         <div>
+            {/*//create card*/}
             <Modal
                 isOpen={addNewCardOpen}
                 showCloseButton={addNewCardOpen}
@@ -87,7 +88,17 @@ export const Cards = () => {
                 className={s.modal}
                 title={'Add new card'}
             >
-                <CreateNewCard onSubmit={createCardHandler} onCancel={() => setAddNewCardOpen(false)}/>
+                <CreateNewCard onSubmit={() => setAddNewCardOpen(false)} id={packId??''} onCancel={() => setAddNewCardOpen(false)}/>
+            </Modal>
+            {/*//delete card*/}
+            <Modal
+                isOpen={deleteCardOpen}
+                showCloseButton={deleteCardOpen}
+                onClose={() => setDeleteCardOpen(false)}
+                className={s.modal}
+                title={'Delete card'}
+            >
+                <DeleteCard id={deleteCardId} onCancel={() => setDeleteCardOpen(false)}/>
             </Modal>
             <Button variant={'link'} as={Link} to={'/'}>
                 <>
@@ -117,6 +128,8 @@ export const Cards = () => {
             <CardsTable
                 items={cards}
                 isMyPack={isMyPack}
+                onClickDelete={setDeleteCardOpen}
+                setDeleteCardId={setDeleteCardId}
             />
             <Pagination
                 className={s.pagination}

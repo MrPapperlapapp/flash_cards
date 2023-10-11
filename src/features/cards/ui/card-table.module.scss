@@ -7,3 +7,18 @@
 .container {
   width: 100%;
 }
+
+.cover {
+  height: 50px;
+}
+
+.cellWithImage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.icon {
+  cursor: pointer;
+}

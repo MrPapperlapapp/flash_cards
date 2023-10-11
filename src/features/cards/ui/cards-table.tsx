@@ -60,17 +60,30 @@ type Props = {
     items?: Card[]
     isMyPack: boolean
     onClickDelete: (open: boolean) => void
-    setDeleteCardId: (id: string) => void
+    onClickEdit: (open: boolean) => void
+    setDeleteOrEditCardId: (id: string) => void
 } & Pick<TableHeaderProps, 'sort' | 'onSort'>
 
-export const CardsTable: FC<Props> = memo(({items, isMyPack, onClickDelete, setDeleteCardId, ...rest}) => {
+export const CardsTable: FC<Props> = memo(({
+                                               items,
+                                               isMyPack,
+                                               onClickDelete,
+                                               onClickEdit,
+                                               setDeleteOrEditCardId,
+                                               ...rest
+                                           }) => {
     if (!items?.length) {
         return <div className={s.empty}>Can't find any cards</div>
     }
 
     const deleteHandler = (id: string) => {
-        setDeleteCardId(id)
+        setDeleteOrEditCardId(id)
         onClickDelete(true)
+    }
+
+    const editHandler = (id: string) => {
+        setDeleteOrEditCardId(id)
+        onClickEdit(true)
     }
 
     return (
@@ -102,7 +115,7 @@ export const CardsTable: FC<Props> = memo(({items, isMyPack, onClickDelete, setD
                             }}/>
                         </Table.Cell>
                         {isMyPack && <Table.Cell>
-                            <Edit className={s.icon}/>
+                            <Edit className={s.icon} onClick={() => editHandler(card.id)}/>
                             <Delete className={s.icon} onClick={() => deleteHandler(card.id)}/>
                         </Table.Cell>}
                     </Table.Row>

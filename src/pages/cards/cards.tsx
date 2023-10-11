@@ -5,7 +5,6 @@ import {Link, useParams} from "react-router-dom";
 import {CardsTable} from "@/features/cards/ui/cards-table.tsx";
 import {Button, Modal, Pagination, TextField, Typography} from "@/components";
 import ArrowBackOutline from "@/assets/icons/arrowBackOutline.tsx";
-import s from "@/pages/pack-list/pack-list.module.scss";
 import {cardsSlice} from "@/features/cards/model/card-slice.ts";
 import {useAppDispatch} from "@/app/store/store.ts";
 import {useGetMeQuery} from "@/features/auth/model/services/auth.ts";
@@ -17,18 +16,20 @@ import {Delete} from "@/assets/icons/drop-down/delete.tsx";
 import {useEffect, useState} from "react";
 import {CreateNewCard} from "@/features/cards/ui/create-card-form/create-card-form.tsx";
 import {DeleteCard} from "@/features/cards/ui/delete-card-form/delete-card-form.tsx";
+import {EditCard} from "@/features/cards/ui/edit-card-form/edit-card-form.tsx";
+import s from "./cards.module.scss"
 
 
 export const Cards = () => {
 
     const [addNewCardOpen, setAddNewCardOpen] = useState(false)
     const [deleteCardOpen, setDeleteCardOpen] = useState(false)
-    const [deleteCardId, setDeleteCardId] = useState('')
+    const [deleteOrEditCardId, setDeleteOrEditCardId] = useState('')
+    const [editCardOpen, setEditCardOpen] = useState(false)
     const currentPage = useSelector(cardsSelectors.selectCurrentPage)
     const itemsPerPage = useSelector(cardsSelectors.selectItemsPerPage)
     const orderBy = useSelector(cardsSelectors.selectOrderBy)
     const searchValue = useSelector(cardsSelectors.selectSearchByQuestion)
-
     const dispatch = useAppDispatch()
     const setCurrentPage = (currentPage: number) =>
         dispatch(cardsSlice.actions.setCurrentPage({page: currentPage}))
@@ -98,7 +99,17 @@ export const Cards = () => {
                 className={s.modal}
                 title={'Delete card'}
             >
-                <DeleteCard id={deleteCardId} onCancel={() => setDeleteCardOpen(false)}/>
+                <DeleteCard id={deleteOrEditCardId} onCancel={() => setDeleteCardOpen(false)}/>
+            </Modal>
+            {/*//edit card*/}
+            <Modal
+                isOpen={editCardOpen}
+                showCloseButton={editCardOpen}
+                onClose={() => setEditCardOpen(false)}
+                className={s.modal}
+                title={'Edit card'}
+            >
+                <EditCard onSubmit={() => setEditCardOpen(false)} id={deleteOrEditCardId} onCancel={() => setEditCardOpen(false)}/>
             </Modal>
             <Button variant={'link'} as={Link} to={'/'}>
                 <>
@@ -129,7 +140,8 @@ export const Cards = () => {
                 items={cards}
                 isMyPack={isMyPack}
                 onClickDelete={setDeleteCardOpen}
-                setDeleteCardId={setDeleteCardId}
+                onClickEdit={setEditCardOpen}
+                setDeleteOrEditCardId={setDeleteOrEditCardId}
             />
             <Pagination
                 className={s.pagination}

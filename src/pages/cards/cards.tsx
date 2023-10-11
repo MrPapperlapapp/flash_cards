@@ -87,7 +87,7 @@ export const Cards = () => {
                 className={s.modal}
                 title={'Add new card'}
             >
-                <CreateNewCard onSubmit={createCardHandler}/>
+                <CreateNewCard onSubmit={createCardHandler} onCancel={() => setAddNewCardOpen(false)}/>
             </Modal>
             <Button variant={'link'} as={Link} to={'/'}>
                 <>

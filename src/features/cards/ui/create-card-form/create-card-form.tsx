@@ -113,50 +113,56 @@ export const CreateNewCard = ({id, onCancel, onSubmit}: Props) => {
     return (
         <>
             {/*<DevTool control={control} />*/}
-            <Card>
+            <Card className={s.card}>
                 <form onSubmit={handleSubmit(handleFormSubmitted)}>
                     <div>
-                        <ControlledTextField label={'question'} name={'question'} control={control}/>
-                        <ControlledTextField label={'answer'} name={'answer'} control={control}/>
-                        <img src={downloadedQuestionImg || noCover} alt={'img'} className={s.image}/>
-                        {questionImgError && (
-                            <Typography variant="caption" className={s.error}>
-                                {questionImgError}
-                            </Typography>
-                        )}
-                        <ControlledFileUploader
-                            control={control}
-                            name="questionImg"
-                            variant="secondary"
-                            extraActions={extraActionsQuestionImg}
-                            fullWidth
-                        >
-                            <Upload className={s.imgIcon}/>
-                            Image Question
-                        </ControlledFileUploader>
-                        <img src={downloadedAnswerImg || noCover} alt={'img'} className={s.image}/>
-                        {questionImgError && (
-                            <Typography variant="caption" className={s.error}>
-                                {answerImgError}
-                            </Typography>
-                        )}
-                        <ControlledFileUploader
-                            control={control}
-                            name="answerImg"
-                            variant="secondary"
-                            extraActions={extraActionsAnswerImg}
-                            fullWidth
-                        >
-                            <Upload className={s.imgIcon}/>
-                            Image Answer
-                        </ControlledFileUploader>
+                        <ControlledTextField className={s.row} label={'Question'} name={'question'} control={control}/>
+                        <ControlledTextField className={s.row} label={'Answer'} name={'answer'} control={control}/>
+                        <div className={s.row}>
+                            <img src={downloadedQuestionImg || noCover} alt={'img'} className={s.image}/>
+                            {questionImgError && (
+                                <Typography variant="caption" className={s.error}>
+                                    {questionImgError}
+                                </Typography>
+                            )}
+                            <ControlledFileUploader
+                                control={control}
+                                name="questionImg"
+                                variant="secondary"
+                                extraActions={extraActionsQuestionImg}
+                                fullWidth
+                            >
+                                <Upload className={s.imgIcon}/>
+                                Image Question
+                            </ControlledFileUploader>
+                        </div>
+                        <div className={s.row}>
+                            <img src={downloadedAnswerImg || noCover} alt={'img'} className={s.image}/>
+                            {questionImgError && (
+                                <Typography variant="caption" className={s.error}>
+                                    {answerImgError}
+                                </Typography>
+                            )}
+                            <ControlledFileUploader
+                                control={control}
+                                name="answerImg"
+                                variant="secondary"
+                                extraActions={extraActionsAnswerImg}
+                                fullWidth
+                            >
+                                <Upload className={s.imgIcon}/>
+                                Image Answer
+                            </ControlledFileUploader>
+                        </div>
                     </div>
-                    <Button variant={"secondary"} onClick={onCancel}>
-                        Cancel
-                    </Button>
-                    <Button type={'submit'}>
-                        Add New Card
-                    </Button>
+                    <div className={s.buttons}>
+                        <Button variant={"secondary"} onClick={onCancel}>
+                            Cancel
+                        </Button>
+                        <Button type={'submit'}>
+                            Add New Card
+                        </Button>
+                    </div>
                 </form>
             </Card>
         </>

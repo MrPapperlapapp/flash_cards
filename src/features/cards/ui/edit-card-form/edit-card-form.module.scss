@@ -1,5 +1,18 @@
-.image {
-  aspect-ratio: 4/1;
-  width: 100%;
-  object-fit: cover;
+.card {
+  padding: 24px;
+
+  .row {
+    margin-bottom: 24px;
+    .image {
+      aspect-ratio: 4/1;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+  }
 }

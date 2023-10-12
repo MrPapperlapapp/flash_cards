@@ -1,6 +1,6 @@
 import {Button, Card, Typography} from '@/components'
 import {useDeleteCardMutation} from "@/features/cards/model";
-
+import s from './delete-card-form.module.scss'
 
 type DeleteCardProps = {
     id: string
@@ -19,16 +19,18 @@ export const DeleteCard = ({id, onCancel}: DeleteCardProps) => {
     return (
         <>
             {/*<DevTool control={control} />*/}
-            <Card>
-                <Typography>Do you really want to remove this card?
-
-                    All cards will be deleted.</Typography>
-                <Button variant={"secondary"} onClick={onCancel}>
-                    Cancel
-                </Button>
-                <Button onClick={deleteHandler}>
-                    Delete Card
-                </Button>
+            <Card className={s.card}>
+                <Typography className={s.row}>
+                    Do you really want to remove this card?
+                </Typography>
+                <div className={s.buttons}>
+                    <Button variant={"secondary"} onClick={onCancel}>
+                        Cancel
+                    </Button>
+                    <Button onClick={deleteHandler}>
+                        Delete Card
+                    </Button>
+                </div>
             </Card>
         </>
     )

@@ -45,17 +45,17 @@ export const Cards = () => {
         dispatch(cardsSlice.actions.setOrderBy({orderBy: newOrderBy}))
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         setSearchValue('')
-    },[])
+    }, [])
 
-    const { packId } = useParams()
+    const {packId} = useParams()
 
 
-    const { cards, totalItems, isLoading, isFetching } = useGetCardsQuery(
-        { id: packId, question: searchValue, currentPage, itemsPerPage, orderBy },
+    const {cards, totalItems, isLoading, isFetching} = useGetCardsQuery(
+        {id: packId, question: searchValue, currentPage, itemsPerPage, orderBy},
         {
-            selectFromResult: ({ data, isLoading, isFetching }) => {
+            selectFromResult: ({data, isLoading, isFetching}) => {
                 return {
                     cards: data?.items,
                     totalItems: data?.pagination.totalItems,
@@ -65,10 +65,10 @@ export const Cards = () => {
             },
         }
     )
-    const { authorId, packName, isLoadingDeckInfo, isFetchingDeckInfo } = useGetDeckInfoQuery(
-        { id: packId ?? "0"},
+    const {authorId, packName, isLoadingDeckInfo, isFetchingDeckInfo} = useGetDeckInfoQuery(
+        {id: packId ?? "0"},
         {
-            selectFromResult: ({ data, isLoading:isLoadingDeckInfo, isFetching:isFetchingDeckInfo }) => {
+            selectFromResult: ({data, isLoading: isLoadingDeckInfo, isFetching: isFetchingDeckInfo}) => {
                 return {
                     authorId: data?.userId,
                     packName: data?.name,
@@ -83,9 +83,8 @@ export const Cards = () => {
     const isMyPack = data?.id === authorId
 
 
-
-    return(
-        <div>
+    return (
+        <section className={s.root}>
             {/*//create card*/}
             <Modal
                 isOpen={addNewCardOpen}
@@ -94,7 +93,8 @@ export const Cards = () => {
                 className={s.modal}
                 title={'Add new card'}
             >
-                <CreateNewCard onSubmit={() => setAddNewCardOpen(false)} id={packId??''} onCancel={() => setAddNewCardOpen(false)}/>
+                <CreateNewCard onSubmit={() => setAddNewCardOpen(false)} id={packId ?? ''}
+                               onCancel={() => setAddNewCardOpen(false)}/>
             </Modal>
             {/*//delete card*/}
             <Modal
@@ -114,30 +114,35 @@ export const Cards = () => {
                 className={s.modal}
                 title={'Edit card'}
             >
-                <EditCard onSubmit={() => setEditCardOpen(false)} id={deleteOrEditCardId} onCancel={() => setEditCardOpen(false)}/>
+                <EditCard onSubmit={() => setEditCardOpen(false)} id={deleteOrEditCardId}
+                          onCancel={() => setEditCardOpen(false)}/>
             </Modal>
-            <Button variant={'link'} as={Link} to={'/'}>
-                <>
-                    <ArrowBackOutline />
-                    Back to Packs List
-                </>
-            </Button>
-            <div>
-                <div>
-                    <Typography variant="large">{packName}</Typography>
-                    {isMyPack && <DropDown>
+            <div className={s.backLinkWrapper}>
+                <Button className={s.backLink} variant={'link'} as={Link} to={'/'}>
+                    <>
+                        <ArrowBackOutline/>
+                        Back to Packs List
+                    </>
+                </Button>
+            </div>
+            <div className={s.header}>
+                <div className={s.titleWrapper}>
+                    <Typography className={s.title} variant="large">{packName}</Typography>
+                    {isMyPack && <div className={s.titleDropDown}><DropDown>
                         <DropDownItemWithIcon icon={<Play/>} text="Learn"/>
                         <DropDownItemWithIcon icon={<Edit/>} text="Edit"/>
                         <DropDownItemWithIcon icon={<Delete/>} text="Delete"/>
-                    </DropDown>}
+                    </DropDown></div>}
                 </div>
-                {isMyPack ? <Button onClick={()=>setAddNewCardOpen(true)}>Add New Card</Button>
-                : <Button>Learn to Pack</Button>}
+                {isMyPack ? <Button onClick={() => setAddNewCardOpen(true)}>Add New Card</Button>
+                    : <Button>Learn to Pack</Button>}
             </div>
             <TextField
+                className={s.search}
                 value={searchValue}
                 onChange={e => {
-                    setSearchValue(e.currentTarget.value)}}
+                    setSearchValue(e.currentTarget.value)
+                }}
                 type={'search'}
                 placeholder="Input search"
             />
@@ -159,7 +164,7 @@ export const Cards = () => {
                     setItemsPerPage(+e)
                 }}
             />
-        </div>
+        </section>
 
     )
 }

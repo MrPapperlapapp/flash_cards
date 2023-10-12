@@ -6,8 +6,42 @@
   border: 1px solid var(--color-dark-500);
 }
 
-.pagination {
-  @include flex(row, 0, 24px, center, center);
+.root {
+  .backLinkWrapper {
+    margin-bottom: 33px;
 
-  margin: 34px 0 200px;
+    .backLink {
+      padding: 0;
+      color: var(--color-light-100)
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 27px;
+
+    .titleWrapper {
+      display: flex;
+      align-items: center;
+
+      .title {
+        margin-right: 16px;
+      }
+      .titleDropDown {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  .search {
+    margin-bottom: 24px;
+  }
+
+  .pagination {
+    @include flex(row, 0, 24px, center, center);
+
+    margin: 34px 0 200px;
+  }
 }

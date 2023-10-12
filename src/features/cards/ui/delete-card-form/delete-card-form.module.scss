@@ -2,12 +2,7 @@
   padding: 24px;
 
   .row {
-    margin-bottom: 24px;
-    .image {
-      aspect-ratio: 4/1;
-      width: 100%;
-      object-fit: cover;
-    }
+    padding: 18px 0;
   }
 
   .buttons {
@@ -16,4 +11,3 @@
     padding: 12px 0;
   }
 }
-

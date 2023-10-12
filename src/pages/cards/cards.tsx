@@ -40,6 +40,11 @@ export const Cards = () => {
     const setSearchValue = (searchValue: string) =>
         dispatch(cardsSlice.actions.setSearchByQuestion({question: searchValue}))
 
+    const setOrderBy = (newOrderBy: any) => {
+        console.log(newOrderBy)
+        dispatch(cardsSlice.actions.setOrderBy({orderBy: newOrderBy}))
+    }
+
     useEffect(()=> {
         setSearchValue('')
     },[])
@@ -137,6 +142,7 @@ export const Cards = () => {
                 placeholder="Input search"
             />
             <CardsTable
+                onSort={setOrderBy}
                 items={cards}
                 isMyPack={isMyPack}
                 onClickDelete={setDeleteCardOpen}

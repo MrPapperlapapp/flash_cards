@@ -9,6 +9,7 @@ import s from "./edit-card-form.module.scss"
 import noCover from "@/assets/icons/upload/no-cover.svg";
 import {useState} from "react";
 import {useGetCardByIdQuery, useUpdateCardMutation} from "@/features/cards/model";
+import {cardsSlice} from "@/features/cards/model/card-slice.ts";
 
 const schemaEditCard = z.object({
     question: z.string().min(3).max(30),

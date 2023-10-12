@@ -1,8 +1,8 @@
-import {FC, memo} from 'react'
+import {FC, memo, useState} from 'react'
 
 import s from './card-table.module.scss'
 
-import {Column, Table, TableHeaderProps} from '@/components/ui/table'
+import {Column, Sort, Table, TableHeaderProps} from '@/components/ui/table'
 import {Card} from "@/features/cards/model";
 import {Grade} from "@/components";
 import {Edit} from "@/assets/icons/drop-down/edit.tsx";
@@ -62,6 +62,7 @@ type Props = {
     onClickDelete: (open: boolean) => void
     onClickEdit: (open: boolean) => void
     setDeleteOrEditCardId: (id: string) => void
+    onSort: (order: string) => void
 } & Pick<TableHeaderProps, 'sort' | 'onSort'>
 
 export const CardsTable: FC<Props> = memo(({
@@ -70,8 +71,17 @@ export const CardsTable: FC<Props> = memo(({
                                                onClickDelete,
                                                onClickEdit,
                                                setDeleteOrEditCardId,
+                                               onSort,
                                                ...rest
                                            }) => {
+
+    const [sort, setSort] = useState<Sort>(null)
+
+    const onSortHandler = (newSort: Sort) => {
+        setSort(newSort)
+        onSort(newSort ? `${newSort?.key}-${newSort?.direction}` : '')
+    }
+
     if (!items?.length) {
         return <div className={s.empty}>Can't find any cards</div>
     }
@@ -88,7 +98,7 @@ export const CardsTable: FC<Props> = memo(({
 
     return (
         <Table.Root className={s.container}>
-            <Table.Header columns={isMyPack ? columnsMy : columns} {...rest} />
+            <Table.Header columns={isMyPack ? columnsMy : columns} sort={sort} onSort={onSortHandler} {...rest} />
             <Table.Body>
                 {items.map(card => (
 

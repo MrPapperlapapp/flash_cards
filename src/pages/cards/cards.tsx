@@ -15,7 +15,7 @@ import {Edit} from "@/assets/icons/drop-down/edit.tsx";
 import {Delete} from "@/assets/icons/drop-down/delete.tsx";
 import {useEffect, useState} from "react";
 import {CreateNewCard} from "@/features/cards/ui/create-card-form/create-card-form.tsx";
-import {DeleteCard} from "@/features/cards/ui/delete-card-form/delete-card-form.tsx";
+import {DeleteItem} from "@/features/cards/ui/delete-card-form/delete-card-form.tsx";
 import {EditCard} from "@/features/cards/ui/edit-card-form/edit-card-form.tsx";
 import s from "./cards.module.scss"
 
@@ -24,6 +24,7 @@ export const Cards = () => {
 
     const [addNewCardOpen, setAddNewCardOpen] = useState(false)
     const [deleteCardOpen, setDeleteCardOpen] = useState(false)
+    const [deletePackOpen, setDeletePackOpen] = useState(false)
     const [deleteOrEditCardId, setDeleteOrEditCardId] = useState('')
     const [editCardOpen, setEditCardOpen] = useState(false)
     const currentPage = useSelector(cardsSelectors.selectCurrentPage)
@@ -96,6 +97,7 @@ export const Cards = () => {
                 <CreateNewCard onSubmit={() => setAddNewCardOpen(false)} id={packId ?? ''}
                                onCancel={() => setAddNewCardOpen(false)}/>
             </Modal>
+
             {/*//delete card*/}
             <Modal
                 isOpen={deleteCardOpen}
@@ -104,8 +106,20 @@ export const Cards = () => {
                 className={s.modal}
                 title={'Delete card'}
             >
-                <DeleteCard id={deleteOrEditCardId} onCancel={() => setDeleteCardOpen(false)}/>
+                <DeleteItem id={deleteOrEditCardId} onCancel={() => setDeleteCardOpen(false)}/>
             </Modal>
+
+            {/*//delete Pack*/}
+            <Modal
+                isOpen={deletePackOpen}
+                showCloseButton={deletePackOpen}
+                onClose={() => setDeletePackOpen(false)}
+                className={s.modal}
+                title={'Delete card'}
+            >
+                <DeleteItem isPack={true} id={packId??''} onCancel={() => setDeletePackOpen(false)}/>
+            </Modal>
+
             {/*//edit card*/}
             <Modal
                 isOpen={editCardOpen}
@@ -131,7 +145,7 @@ export const Cards = () => {
                     {isMyPack && <div className={s.titleDropDown}><DropDown>
                         <DropDownItemWithIcon icon={<Play/>} text="Learn"/>
                         <DropDownItemWithIcon icon={<Edit/>} text="Edit"/>
-                        <DropDownItemWithIcon icon={<Delete/>} text="Delete"/>
+                        <DropDownItemWithIcon icon={<Delete/>} text="Delete" onSelect={() => setDeletePackOpen(true)}/>
                     </DropDown></div>}
                 </div>
                 {isMyPack ? <Button onClick={() => setAddNewCardOpen(true)}>Add New Card</Button>

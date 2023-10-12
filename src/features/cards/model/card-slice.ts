@@ -5,7 +5,7 @@ export const cardsSlice = createSlice({
   initialState: {
     searchByQuestion: '',
     currentPage: 1,
-    itemsPerPage: 4,
+    itemsPerPage: 10,
     orderBy: 'created-desc',
   },
   reducers: {

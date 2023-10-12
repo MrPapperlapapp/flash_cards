@@ -1,0 +1,47 @@
+@import '@/styles/mixin';
+
+.modal {
+  max-width: 450px;
+  background: var(--color-dark-700);
+  border: 1px solid var(--color-dark-500);
+}
+
+.root {
+  .backLinkWrapper {
+    margin-bottom: 33px;
+
+    .backLink {
+      padding: 0;
+      color: var(--color-light-100)
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 27px;
+
+    .titleWrapper {
+      display: flex;
+      align-items: center;
+
+      .title {
+        margin-right: 16px;
+      }
+      .titleDropDown {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  .search {
+    margin-bottom: 24px;
+  }
+
+  .pagination {
+    @include flex(row, 0, 24px, center, center);
+
+    margin: 34px 0 200px;
+  }
+}

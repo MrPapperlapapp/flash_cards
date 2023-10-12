@@ -8,6 +8,7 @@ import { ForgotPassword } from '@/components/auth/forgot-password'
 import { SignUp } from '@/components/auth/sign-up'
 import { Packs } from '@/pages/pack-list/pack-list.tsx'
 import { Profile } from '@/pages/profile'
+import {Cards} from "@/pages/cards/cards.tsx";
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -36,6 +37,10 @@ export const privateRoutes: RouteObject[] = [
   {
     path: '/',
     element: <Packs />,
+  },
+  {
+    path: '/:packId',
+    element: <Cards />,
   },
   {
     path: '/profile',

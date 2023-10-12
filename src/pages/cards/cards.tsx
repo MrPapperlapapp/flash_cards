@@ -18,6 +18,7 @@ import {CreateNewCard} from "@/features/cards/ui/create-card-form/create-card-fo
 import {DeleteItem} from "@/features/cards/ui/delete-card-form/delete-card-form.tsx";
 import {EditCard} from "@/features/cards/ui/edit-card-form/edit-card-form.tsx";
 import s from "./cards.module.scss"
+import {EditPackModal} from "@/features/packs/ui/pack-edit-modal/pack-edit-modal.tsx";
 
 
 export const Cards = () => {
@@ -27,6 +28,8 @@ export const Cards = () => {
     const [deletePackOpen, setDeletePackOpen] = useState(false)
     const [deleteOrEditCardId, setDeleteOrEditCardId] = useState('')
     const [editCardOpen, setEditCardOpen] = useState(false)
+    const [editPackOpen, setEditPackOpen] = useState(false)
+
     const currentPage = useSelector(cardsSelectors.selectCurrentPage)
     const itemsPerPage = useSelector(cardsSelectors.selectItemsPerPage)
     const orderBy = useSelector(cardsSelectors.selectOrderBy)
@@ -66,13 +69,15 @@ export const Cards = () => {
             },
         }
     )
-    const {authorId, packName, isLoadingDeckInfo, isFetchingDeckInfo} = useGetDeckInfoQuery(
+    const {authorId, packName, packIsPrivate, packCover, isLoadingDeckInfo, isFetchingDeckInfo} = useGetDeckInfoQuery(
         {id: packId ?? "0"},
         {
             selectFromResult: ({data, isLoading: isLoadingDeckInfo, isFetching: isFetchingDeckInfo}) => {
                 return {
                     authorId: data?.userId,
                     packName: data?.name,
+                    packIsPrivate: data?.isPrivate,
+                    packCover: data?.cover,
                     isLoadingDeckInfo,
                     isFetchingDeckInfo,
                 }
@@ -117,7 +122,7 @@ export const Cards = () => {
                 className={s.modal}
                 title={'Delete card'}
             >
-                <DeleteItem isPack={true} id={packId??''} onCancel={() => setDeletePackOpen(false)}/>
+                <DeleteItem isPack={true} id={packId ?? ''} onCancel={() => setDeletePackOpen(false)}/>
             </Modal>
 
             {/*//edit card*/}
@@ -131,6 +136,15 @@ export const Cards = () => {
                 <EditCard onSubmit={() => setEditCardOpen(false)} id={deleteOrEditCardId}
                           onCancel={() => setEditCardOpen(false)}/>
             </Modal>
+
+            {/*//edit pack*/}
+            <EditPackModal open={editPackOpen}
+                           setOpen={setEditPackOpen}
+                           id={packId ?? ''}
+                           name={packName ?? ''}
+                           isPrivate={packIsPrivate ?? false}
+                           cover={packCover ?? ''}/>
+
             <div className={s.backLinkWrapper}>
                 <Button className={s.backLink} variant={'link'} as={Link} to={'/'}>
                     <>
@@ -144,7 +158,7 @@ export const Cards = () => {
                     <Typography className={s.title} variant="large">{packName}</Typography>
                     {isMyPack && <div className={s.titleDropDown}><DropDown>
                         <DropDownItemWithIcon icon={<Play/>} text="Learn"/>
-                        <DropDownItemWithIcon icon={<Edit/>} text="Edit"/>
+                        <DropDownItemWithIcon icon={<Edit/>} text="Edit" onSelect={() => setEditPackOpen(true)}/>
                         <DropDownItemWithIcon icon={<Delete/>} text="Delete" onSelect={() => setDeletePackOpen(true)}/>
                     </DropDown></div>}
                 </div>

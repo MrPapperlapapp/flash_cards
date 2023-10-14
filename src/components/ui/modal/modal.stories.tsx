@@ -30,14 +30,14 @@ export const Default: Story = {
     )
   },
   args: {
-    children: <SignIn onSubmit={() => {}} />,
+    children: <SignIn />,
   },
 }
 
 export const ModalWithCloseButton: Story = {
   ...Default,
   args: {
-    children: <CheckEmail email={'a@a.com'} />,
+    children: <CheckEmail />,
     showCloseButton: true,
   },
 }

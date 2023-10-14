@@ -56,7 +56,7 @@ export const Cards = () => {
     const {packId} = useParams()
 
 
-    const {cards, totalItems, isLoading, isFetching} = useGetCardsQuery(
+    const {cards, totalItems} = useGetCardsQuery(
         {id: packId, question: searchValue, currentPage, itemsPerPage, orderBy},
         {
             selectFromResult: ({data, isLoading, isFetching}) => {
@@ -69,7 +69,7 @@ export const Cards = () => {
             },
         }
     )
-    const {authorId, packName, packIsPrivate, packCover, isLoadingDeckInfo, isFetchingDeckInfo} = useGetDeckInfoQuery(
+    const {authorId, packName, packIsPrivate, packCover} = useGetDeckInfoQuery(
         {id: packId ?? "0"},
         {
             selectFromResult: ({data, isLoading: isLoadingDeckInfo, isFetching: isFetchingDeckInfo}) => {

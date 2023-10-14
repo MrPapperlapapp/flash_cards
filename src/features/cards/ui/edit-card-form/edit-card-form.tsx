@@ -9,7 +9,6 @@ import s from "./edit-card-form.module.scss"
 import noCover from "@/assets/icons/upload/no-cover.svg";
 import {useState} from "react";
 import {useGetCardByIdQuery, useUpdateCardMutation} from "@/features/cards/model";
-import {cardsSlice} from "@/features/cards/model/card-slice.ts";
 
 const schemaEditCard = z.object({
     question: z.string().min(3).max(30),
@@ -47,7 +46,7 @@ export const EditCard = ({id, onCancel, onSubmit}: Props) => {
 
     const {defaultAnswer, defaultQuestion, defaultAnswerImg, defaultQuestionImg} = useGetCardByIdQuery({id},
         {
-            selectFromResult: ({data, isLoading, isFetching}) => {
+            selectFromResult: ({data}) => {
                 return {
                     defaultAnswer: data?.answer,
                     defaultQuestion: data?.question,

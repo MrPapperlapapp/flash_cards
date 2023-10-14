@@ -22,6 +22,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: { email: 'test@email.com' },
   render: () => {
-    return <CheckEmail email={'test@email.com'} />
+    return <CheckEmail />
   },
 }

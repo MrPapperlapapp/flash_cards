@@ -13,6 +13,6 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    onSubmit: data => console.info(data),
+    onSubmit: () => console.info('Hallo'),
   },
 }

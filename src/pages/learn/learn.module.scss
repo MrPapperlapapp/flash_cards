@@ -1,0 +1,28 @@
+@import '@/styles/mixin';
+
+.root {
+  @include container(420px);
+
+  .content {
+    @include flex(column, 25px, 0, center);
+
+    padding: 30px;
+
+    .question,
+    .answer {
+      align-self: stretch;
+
+      > b {
+        font-weight: var(--font-weight-bold);
+      }
+
+      .caption {
+        color: var(--color-dark-100);
+      }
+
+      .rate {
+        padding-block: 12px;
+      }
+    }
+  }
+}

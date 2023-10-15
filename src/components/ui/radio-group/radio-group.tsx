@@ -7,12 +7,17 @@ import s from './radio-group.module.scss'
 
 import { Typography } from '@/components/ui'
 
-export const RadioGroup = ({ options, onValueChange, ...rest }: RadioGroupType) => {
+export const RadioGroup = ({ options, onValueChange, errorMessage, ...rest }: RadioGroupType) => {
   return (
     <RadioGroupRoot onValueChange={onValueChange} {...rest}>
       {options.map(el => (
         <RadioGroupItem key={el.value} value={el.value} label={el.label}></RadioGroupItem>
       ))}
+      {errorMessage && (
+        <Typography variant={'caption'} className={s.error}>
+          {errorMessage}
+        </Typography>
+      )}
     </RadioGroupRoot>
   )
 }
@@ -44,12 +49,12 @@ const RadioGroupItem = forwardRef<
   )
 })
 
-type Option = {
+export type Option = {
   label: string
   value: string
 }
 
-type RadioGroupType = {
+export type RadioGroupType = {
   options: Option[]
   name?: string
   value?: string
@@ -57,4 +62,5 @@ type RadioGroupType = {
   disabled?: boolean
   defaultValue?: string
   onValueChange?: (val: string) => void
+  errorMessage?: string
 }

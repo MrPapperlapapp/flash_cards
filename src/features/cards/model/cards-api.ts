@@ -1,5 +1,11 @@
-import {Card, CreateCardResponse, GetCardsResponse} from '@/features/cards/model/types.ts'
-import {baseApi} from '@/services/base-api.ts'
+import {
+  Card,
+  CardRateRequest,
+  CreateCardResponse,
+  GetCardsResponse,
+  RandomCardRequest,
+} from '@/features/cards/model/types.ts'
+import { baseApi } from '@/services/base-api.ts'
 
 export const cardsApi = baseApi.injectEndpoints({
     endpoints: builder => {
@@ -49,8 +55,36 @@ export const cardsApi = baseApi.injectEndpoints({
                 },
                 invalidatesTags: ['Card'],
             }),
-        }
-    },
+    getRandomCard: builder.query<Card, RandomCardRequest>({
+        query: ({ id, previousCardId }) => ({
+            url: `v1/decks/${id}/learn`,
+            method: 'GET',
+            params: { previousCardId },
+        }),
+    }),
+    rateCard: builder.mutation<Card, CardRateRequest>({
+        query: ({ packId, ...rest }) => ({
+            url: `v1/decks/${packId}/learn`,
+            method: 'POST',
+            body: rest,
+        }),
+        async onQueryStarted({ packId }, { dispatch, queryFulfilled }) {
+            try {
+                const { data: newCard } = await queryFulfilled
+
+                dispatch(
+                    cardsApi.util.updateQueryData('getRandomCard', { id: packId }, () => {
+                        return newCard
+                    })
+                )
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        invalidatesTags: ['Card'],
+    }),
+}
+},
 })
 
 export const {
@@ -59,7 +93,9 @@ export const {
     useCreateCardMutation,
     useDeleteCardMutation,
     useUpdateCardMutation,
-    useGetCardByIdQuery
+    useGetCardByIdQuery,
+    useGetRandomCardQuery,
+    useRateCardMutation,
 } = cardsApi
 
 export type ArgCreateCard = {

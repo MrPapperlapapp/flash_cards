@@ -19,7 +19,6 @@ type Props = {
 
 export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
   const isMyPack = authUserId === pack.author.id
-  // const isMyPack = true
 
   const navigate = useNavigate()
 
@@ -34,7 +33,7 @@ export const PackRow: FC<Props> = memo(({ pack, authUserId }) => {
   }
 
   const onLearn = () => {
-    navigate(`${pack.id}/learn`)
+    navigate(`packs/${pack.id}/learn`)
   }
 
   return (

@@ -85,3 +85,12 @@ export type ArgSaveGrade = {
   cardId: string | undefined
   grade: string | number
 }
+export type RandomCardRequest = {
+  id: string
+  previousCardId?: string
+}
+export type CardRateRequest = {
+  packId: string
+  cardId: string
+  grade: number
+}

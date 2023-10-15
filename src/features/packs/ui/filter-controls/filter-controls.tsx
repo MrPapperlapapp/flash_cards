@@ -5,6 +5,8 @@ import s from './filter-controls.module.scss'
 import { Delete } from '@/assets/icons/drop-down/delete.tsx'
 import { Button, Tabs, TabsType, TextField, Typography } from '@/components'
 import { Slider } from '@/components/ui/slider'
+import { useGetMeQuery } from '@/features/auth/model/services/auth.ts'
+import { UserType } from '@/features/auth/model/services/auth.types.ts'
 
 type Props = {
   searchName: string
@@ -25,8 +27,12 @@ export const FilterControls: FC<Props> = memo(
     tabValue,
     setTabValue,
   }) => {
+    const { data } = useGetMeQuery()
+
+    const userId = (data as UserType).id
+
     const tabs: TabsType[] = [
-      { value: 'userId', label: 'My cards' }, //поменять 'userId', когда будет авторизация
+      { value: userId, label: 'My cards' },
       { value: '', label: 'All cards' },
     ]
 

@@ -6,19 +6,29 @@
 
 .container {
   width: 100%;
+
+  .cellWithImage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+
+    .cover {
+      height: 50px;
+    }
+  }
+
+  .buttonsBlock {
+    width: 6rem;
+
+    .icon {
+      cursor: pointer;
+    }
+  }
 }
 
-.cover {
-  height: 50px;
-}
 
-.cellWithImage {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: start;
-}
 
-.icon {
-  cursor: pointer;
-}
+
+
+

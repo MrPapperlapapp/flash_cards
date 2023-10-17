@@ -191,6 +191,9 @@ export const Cards = () => {
                     <Button onClick={onLearn}>Learn to Pack</Button>
                 )}
             </div>
+            {packCover && <div className={s.packCover}>
+                <img className={s.packCoverImg} src={packCover} alt="pack cover"/>
+            </div>}
             <TextField
                 className={s.search}
                 value={searchValue}

@@ -124,7 +124,7 @@ export const CardsTable: FC<Props> = memo(({
                             <Grade value={card.grade} onClick={() => {
                             }}/>
                         </Table.Cell>
-                        {isMyPack && <Table.Cell>
+                        {isMyPack && <Table.Cell className={s.buttonsBlock}>
                             <Edit className={s.icon} onClick={() => editHandler(card.id)}/>
                             <Delete className={s.icon} onClick={() => deleteHandler(card.id)}/>
                         </Table.Cell>}

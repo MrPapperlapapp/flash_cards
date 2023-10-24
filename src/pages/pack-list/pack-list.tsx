@@ -9,10 +9,15 @@ import { usePacksPagination } from '@/features/packs/model/hooks/use-pagination-
 import { useCreateDeckMutation, useGetDecksQuery } from '@/features/packs/model/services'
 import { FilterControls } from '@/features/packs/ui/filter-controls/filter-controls.tsx'
 import { PacksTable } from '@/features/packs/ui/pack-table/pack-table.tsx'
+import {useDebounce} from "@/services/common/hooks/useDebounce.ts";
 export const Packs = () => {
   const { currentPage, pageSize, setCurrentPage, setPageSize } = usePacksPagination()
   const { searchName, tabValue, sliderValue, setSearchName, setTabValue, setSliderValue } =
     usePacksFilter()
+
+  const debouncedSearchName = useDebounce(searchName)
+  const debouncedSliderValue = useDebounce(sliderValue)
+
 
   const [open, setOpen] = useState(false)
 
@@ -26,12 +31,12 @@ export const Packs = () => {
 
   const packs = useGetDecksQuery({
     authorId: tabValue,
-    name: searchName,
+    name: debouncedSearchName,
     orderBy: sortedString,
     currentPage,
     itemsPerPage: pageSize,
-    minCardsCount: sliderValue[0],
-    maxCardsCount: sliderValue[1],
+    minCardsCount: debouncedSliderValue[0],
+    maxCardsCount: debouncedSliderValue[1],
   })
 
   useEffect(() => {

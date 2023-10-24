@@ -22,6 +22,7 @@ import {DeleteItem} from '@/features/cards/ui/delete-card-form/delete-card-form.
 import {EditCard} from '@/features/cards/ui/edit-card-form/edit-card-form.tsx'
 import {useGetDeckInfoQuery} from '@/features/packs/model/services'
 import {EditPackModal} from '@/features/packs/ui/pack-edit-modal/pack-edit-modal.tsx'
+import {useDebounce} from "@/services/common/hooks/useDebounce.ts";
 
 export const Cards = () => {
     const [addNewCardOpen, setAddNewCardOpen] = useState(false)
@@ -37,6 +38,8 @@ export const Cards = () => {
     const searchValue = useSelector(cardsSelectors.selectSearchByQuestion)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    const  debouncedSearchValue = useDebounce(searchValue)
     const setCurrentPage = (currentPage: number) =>
         dispatch(cardsSlice.actions.setCurrentPage({page: currentPage}))
 
@@ -58,7 +61,7 @@ export const Cards = () => {
     const {packId} = useParams()
 
     const {cards, totalItems} = useGetCardsQuery(
-        {id: packId, question: searchValue, currentPage, itemsPerPage, orderBy},
+        {id: packId, question: debouncedSearchValue, currentPage, itemsPerPage, orderBy},
         {
             selectFromResult: ({data, isLoading, isFetching}) => {
                 return {

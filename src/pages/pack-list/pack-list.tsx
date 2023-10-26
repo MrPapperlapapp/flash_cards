@@ -9,7 +9,7 @@ import { usePacksPagination } from '@/features/packs/model/hooks/use-pagination-
 import { useCreateDeckMutation, useGetDecksQuery } from '@/features/packs/model/services'
 import { FilterControls } from '@/features/packs/ui/filter-controls/filter-controls.tsx'
 import { PacksTable } from '@/features/packs/ui/pack-table/pack-table.tsx'
-import {useDebounce} from "@/services/common/hooks/useDebounce.ts";
+import {useDebounce} from '@/services/common/hooks/useDebounce.ts';
 export const Packs = () => {
   const { currentPage, pageSize, setCurrentPage, setPageSize } = usePacksPagination()
   const { searchName, tabValue, sliderValue, setSearchName, setTabValue, setSliderValue } =

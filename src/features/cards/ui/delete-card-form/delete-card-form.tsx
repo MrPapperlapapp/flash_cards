@@ -30,10 +30,10 @@ export const DeleteItem = ({id, onCancel, isPack}: DeleteCardProps) => {
         } else {
             deleteCard({id})
                 .unwrap()
-                .catch(error => {
-                    if ('status' in error) {
-                        toast.error(`${error.data.message}`, {toastId: 'deleteCard'})
-                    }
+                .catch(e => {
+                    e.status === 'FETCH_ERROR'
+                        ? toast.error('No internet connection')
+                        : toast.error(e.data.message)
                 })
         }
 

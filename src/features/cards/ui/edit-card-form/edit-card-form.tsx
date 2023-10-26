@@ -126,10 +126,10 @@ export const EditCard = ({id, onCancel, onSubmit}: Props) => {
 
         editCard({id, form})
             .unwrap()
-            .catch(error => {
-                if ('status' in error) {
-                    toast.error(`${error.data.message}`, {toastId: 'editCard'})
-                }
+            .catch(e => {
+                e.status === 'FETCH_ERROR'
+                    ? toast.error('No internet connection')
+                    : toast.error(e.data.message)
             })
         onSubmit()
     }

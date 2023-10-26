@@ -109,10 +109,10 @@ export const CreateNewCard = ({id, onCancel, onSubmit}: Props) => {
 
         createCard({id, form})
             .unwrap()
-            .catch(error => {
-                if ('status' in error) {
-                    toast.error(`${error.data.message}`, {toastId: 'createCard'})
-                }
+            .catch(e => {
+                e.status === 'FETCH_ERROR'
+                    ? toast.error('No internet connection')
+                    : toast.error(e.data.message)
             })
         onSubmit()
     }

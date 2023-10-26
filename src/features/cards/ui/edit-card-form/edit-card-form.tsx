@@ -9,6 +9,7 @@ import s from "./edit-card-form.module.scss"
 import noCover from "@/assets/icons/upload/no-cover.svg";
 import {useState} from "react";
 import {useGetCardByIdQuery, useUpdateCardMutation} from "@/features/cards/model";
+import {toast} from "react-toastify";
 
 const schemaEditCard = z.object({
     question: z.string().min(3).max(30),
@@ -46,15 +47,18 @@ export const EditCard = ({id, onCancel, onSubmit}: Props) => {
 
     const {defaultAnswer, defaultQuestion, defaultAnswerImg, defaultQuestionImg} = useGetCardByIdQuery({id},
         {
-            selectFromResult: ({data}) => {
+            selectFromResult: ({data, error}) => {
                 return {
                     defaultAnswer: data?.answer,
                     defaultQuestion: data?.question,
                     defaultAnswerImg: data?.answerImg,
                     defaultQuestionImg: data?.questionImg,
+                    error,
                 }
             },
         })
+
+    const [editCard] = useUpdateCardMutation()
 
     const {control, handleSubmit, getValues, watch, trigger, getFieldState, resetField} = useForm<FormTypeAddCard>({
         mode: 'onSubmit',
@@ -111,7 +115,7 @@ export const EditCard = ({id, onCancel, onSubmit}: Props) => {
         }
     }
 
-    const [editCard] = useUpdateCardMutation()
+
     const handleFormSubmitted = (data: FormTypeAddCard) => {
         const form = new FormData()
 
@@ -121,6 +125,12 @@ export const EditCard = ({id, onCancel, onSubmit}: Props) => {
         data.answerImg && form.append('answerImg', data.answerImg)
 
         editCard({id, form})
+            .unwrap()
+            .catch(error => {
+                if ('status' in error) {
+                    toast.error(`${error.data.message}`, {toastId: 'editCard'})
+                }
+            })
         onSubmit()
     }
 

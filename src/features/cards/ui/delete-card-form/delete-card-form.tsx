@@ -3,6 +3,7 @@ import {useDeleteCardMutation} from "@/features/cards/model";
 import s from './delete-card-form.module.scss'
 import {useDeleteDeckMutation} from "@/features/packs/model/services";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 
 type DeleteCardProps = {
@@ -17,11 +18,23 @@ export const DeleteItem = ({id, onCancel, isPack}: DeleteCardProps) => {
     const navigate = useNavigate()
 
     const deleteHandler = () => {
-        if(isPack) {
+        if (isPack) {
             deletePack({id})
+                .unwrap()
+                .catch(error => {
+                    if ('status' in error) {
+                        toast.error(`${error.data.message}`, {toastId: 'deletePack'})
+                    }
+                })
             navigate('/')
-        }  else {
+        } else {
             deleteCard({id})
+                .unwrap()
+                .catch(error => {
+                    if ('status' in error) {
+                        toast.error(`${error.data.message}`, {toastId: 'deleteCard'})
+                    }
+                })
         }
 
         onCancel()

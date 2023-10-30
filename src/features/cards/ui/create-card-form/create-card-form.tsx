@@ -9,6 +9,7 @@ import s from "./create-card-form.module.scss"
 import noCover from "@/assets/icons/upload/no-cover.svg";
 import {useState} from "react";
 import {useCreateCardMutation} from "@/features/cards/model";
+import {toast} from "react-toastify";
 
 const schemaAddCard = z.object({
     question: z.string().min(3).max(30),
@@ -40,6 +41,7 @@ type Props = {
 export const CreateNewCard = ({id, onCancel, onSubmit}: Props) => {
     const [downloadedQuestionImg, setDownloadedQuestionImg] = useState<string>('')
     const [downloadedAnswerImg, setDownloadedAnswerImg] = useState<string>('')
+    const [createCard] = useCreateCardMutation()
 
     const [questionImgError, setQuestionImgError] = useState('')
     const [answerImgError, setAnswerImgError] = useState('')
@@ -97,7 +99,6 @@ export const CreateNewCard = ({id, onCancel, onSubmit}: Props) => {
         }
     }
 
-    const [createCard] = useCreateCardMutation()
     const handleFormSubmitted = (data: FormTypeAddCard) => {
         const form = new FormData()
 
@@ -107,6 +108,12 @@ export const CreateNewCard = ({id, onCancel, onSubmit}: Props) => {
         data.answerImg && form.append('answerImg', data.answerImg)
 
         createCard({id, form})
+            .unwrap()
+            .catch(e => {
+                e.status === 'FETCH_ERROR'
+                    ? toast.error('No internet connection')
+                    : toast.error(e.data.message)
+            })
         onSubmit()
     }
 

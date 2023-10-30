@@ -22,7 +22,8 @@ import {DeleteItem} from '@/features/cards/ui/delete-card-form/delete-card-form.
 import {EditCard} from '@/features/cards/ui/edit-card-form/edit-card-form.tsx'
 import {useGetDeckInfoQuery} from '@/features/packs/model/services'
 import {EditPackModal} from '@/features/packs/ui/pack-edit-modal/pack-edit-modal.tsx'
-import {useDebounce} from "@/services/common/hooks/useDebounce.ts";
+import {useDebounce} from '@/services/common/hooks/useDebounce.ts'
+import {toast} from "react-toastify";
 
 export const Cards = () => {
     const [addNewCardOpen, setAddNewCardOpen] = useState(false)
@@ -39,7 +40,7 @@ export const Cards = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const  debouncedSearchValue = useDebounce(searchValue)
+    const debouncedSearchValue = useDebounce(searchValue)
     const setCurrentPage = (currentPage: number) =>
         dispatch(cardsSlice.actions.setCurrentPage({page: currentPage}))
 
@@ -60,26 +61,28 @@ export const Cards = () => {
 
     const {packId} = useParams()
 
-    const {cards, totalItems} = useGetCardsQuery(
+    const {cards, totalItems, error} = useGetCardsQuery(
         {id: packId, question: debouncedSearchValue, currentPage, itemsPerPage, orderBy},
         {
-            selectFromResult: ({data, isLoading, isFetching}) => {
+            selectFromResult: ({data, isLoading, isFetching, error}) => {
                 return {
                     cards: data?.items,
                     totalItems: data?.pagination.totalItems,
                     isLoading,
                     isFetching,
+                    error,
                 }
             },
         }
     )
-    const {authorId, packName, packIsPrivate, packCover} = useGetDeckInfoQuery(
+    const {authorId, packName, packIsPrivate, packCover, errorDeckInfo} = useGetDeckInfoQuery(
         {id: packId ?? '0'},
         {
             selectFromResult: ({
                                    data,
                                    isLoading: isLoadingDeckInfo,
                                    isFetching: isFetchingDeckInfo,
+                                   error,
                                }) => {
                 return {
                     authorId: data?.userId,
@@ -88,10 +91,21 @@ export const Cards = () => {
                     packCover: data?.cover,
                     isLoadingDeckInfo,
                     isFetchingDeckInfo,
+                    errorDeckInfo: error,
                 }
             },
         }
     )
+
+    useEffect(() => {
+        if(error && 'status' in error){
+            toast.error(`${error.status}`, {toastId: 'cardsError'})
+        }else if(errorDeckInfo && 'status' in errorDeckInfo){
+            toast.error(`${errorDeckInfo.status}`, {toastId: 'cardsError'})
+        }else if(errorDeckInfo || error){
+            toast.error(`fetch failed`, {toastId: 'cardsError'})
+        }
+    }, [errorDeckInfo, error])
 
     const onLearn = () => {
         navigate(`/packs/${packId}/learn`)
@@ -224,6 +238,7 @@ export const Cards = () => {
                     setItemsPerPage(+e)
                 }}
             />
+
         </section>
     )
 }
